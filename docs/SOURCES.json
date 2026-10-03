@@ -1,0 +1,29 @@
+{
+  "research_date": "2026-10-03",
+  "repositories": {
+    "bsp": {
+      "repository": "freewili/wilicm0bsp",
+      "commit": "d27edf1c18bc2c18a76c4c9cdbf200c19884cc06"
+    },
+    "onewili": {
+      "repository": "freewili/onewili",
+      "commit": "9ce9df83b89f83681507f19f960958e23f20ac37"
+    },
+    "gui": {
+      "repository": "freewili/freewili-gui",
+      "commit": "275df3608c76e04f10f36a3964fdbceadd76d4f0"
+    },
+    "display": {
+      "repository": "freewili/wilibsp",
+      "commit": "be4bdd63d31a80f95410e583710cf4e43a7be7fa"
+    },
+    "bus": {
+      "repository": "DangerousPrototypes/BusPirate5-firmware",
+      "commit": "f8ccc1c4b5c392ffb09fb21348bcedf219919816"
+    },
+    "bit": {
+      "repository": "geo-tp/ESP32-Bit-Pirate",
+      "commit": "8022f80381bb12bc87c5d4d69bd296db661d6d1c"
+    }
+  }
+}
