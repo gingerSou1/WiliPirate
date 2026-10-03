@@ -1,0 +1,3 @@
+[submodule "vendor/wilicm0bsp"]
+	path = vendor/wilicm0bsp
+	url = https://github.com/freewili/wilicm0bsp.git
