@@ -14,7 +14,7 @@ and docs/SOURCES.json identify the same upstream revision.
 - Default launch has no stdin dependency. Logs belong to the Linux Apps launcher.
   Future app data/config belongs in ~/.local/share/wilipirate/ and
   ~/.config/wilipirate/; never write it alongside installed source.
-- Only the feature/wilipirate branch is authorized for development. No push,
+- M1C development is authorized on feature/wili-ui; preserve feature/wilipirate. No push,
   merge, remote creation, hardware testing, flashing, device package installs,
   BSP modifications or Milestone 2 without explicit user approval.
 - Do not edit submodule sources or import Bus Pirate/Bit Pirate source trees.
@@ -39,3 +39,11 @@ Runtime code lives in apps/wilipirate/wilipirate/: console -> application/parser
 dynamic backend discovery or backend-selection environment variable is permitted.
 Run the complete tests, including import/call guards, runtime audit and the
 M1A report identity test. These are regression checks, not a Python sandbox.
+
+## M1C host UI boundary
+
+Read docs/EMULATOR_RESEARCH.md before UI changes. The official simulator does
+not execute CM0 Python. ui/ is a host-only panel preview, separate from the
+unchanged apps/wilipirate core and staging artifact. No real display/input
+connection, OneWili import or transport is permitted. All commands must pass
+through Application.submit. Preserve all 32 M1B tests and the M1A report.
