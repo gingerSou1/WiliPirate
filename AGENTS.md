@@ -47,3 +47,13 @@ not execute CM0 Python. ui/ is a host-only panel preview, separate from the
 unchanged apps/wilipirate core and staging artifact. No real display/input
 connection, OneWili import or transport is permitted. All commands must pass
 through Application.submit. Preserve all 32 M1B tests and the M1A report.
+
+## M1D preparation
+
+Read docs/ON_DEVICE_ARCHITECTURE.md for the native-vs-CM0 decision. Source-only
+native/cm0 uses the official WiliCM0BSP C++ socket adapter; it never calls the
+unsafe Python adapter/CLI. This explicitly authorized preparation is separate
+from unchanged M1B/M1C code. No physical deployment or execution. The native
+WiliBSP template changes VREF/radio on startup and is not approved for use.
+Run the full host suite; distinguish compile-only checks from Linux runtime
+qualification. Do not call the prepared binary on any real bridge.
