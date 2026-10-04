@@ -1,4 +1,4 @@
-"""Stage the no-I/O M1 app locally; never install packages or contact a device."""
+"""Stage the stub-only M1B app locally; never install packages or contact a device."""
 import argparse
 from pathlib import Path
 import shutil
@@ -14,13 +14,18 @@ def stage(output: Path) -> Path:
         "README.md": ROOT / "apps/wilipirate/README.md",
         "THIRD_PARTY.md": ROOT / "docs/THIRD_PARTY.md",
     }
+    for module in ("__init__", "model", "parser", "backends", "state", "application", "console"):
+        name = f"wilipirate/{module}.py"
+        files[name] = ROOT / "apps/wilipirate" / name
     for source in files.values():
         if not source.is_file():
             raise FileNotFoundError(source)
     # Exclusive mkdir also refuses a dangling symlink. Never merge/overwrite.
     destination.mkdir(parents=True, exist_ok=False)
     for name, source in files.items():
-        shutil.copyfile(source, destination / name)
+        target = destination / name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(source, target)
     (destination / "run.sh").chmod(0o755)
     return destination
 

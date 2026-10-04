@@ -18,27 +18,31 @@ class StageTests(unittest.TestCase):
             base = Path(directory)
             target = staging.stage(base / "first location")
             self.assertEqual({path.name for path in target.iterdir()},
-                             {"app.py", "run.sh", "README.md", "THIRD_PARTY.md"})
+                             {"app.py", "run.sh", "README.md", "THIRD_PARTY.md", "wilipirate"})
             moved = base / "moved app"
             target.rename(moved)
-            result = subprocess.run([sys.executable, "-I", "-B", str(moved / "app.py"),
-                                     "--command", "info"], cwd=base, stdin=subprocess.DEVNULL,
+            result = subprocess.run([sys.executable, "-E", "-s", "-B", str(moved / "app.py"),
+                                     "--command", "mode i2c", "--command", "info"], cwd=base, stdin=subprocess.DEVNULL,
                                     capture_output=True, text=True, timeout=5)
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertIn("WiliPirate", result.stdout)
+            self.assertIn("Mode: I2C", result.stdout)
+            self.assertIn("Backend: STUB", result.stdout)
             self.assertIn("External pin/power state is unknown", result.stdout)
             self.assertEqual((moved / "app.py").read_bytes(), (ROOT / "apps/wilipirate/app.py").read_bytes())
             self.assertNotIn(b"\r", (moved / "run.sh").read_bytes())
+            expected = {"__init__.py", "application.py", "backends.py", "console.py", "model.py", "parser.py", "state.py"}
+            self.assertEqual({p.name for p in (moved / "wilipirate").iterdir()}, expected)
 
     def test_existing_directory_is_never_overwritten(self):
         with tempfile.TemporaryDirectory() as directory:
             target = staging.stage(Path(directory))
             sentinel = target / "user-data.txt"
             sentinel.write_text("preserve me", encoding="utf-8")
-            before = {p.name: p.read_bytes() for p in target.iterdir()}
+            before = {str(p.relative_to(target)): p.read_bytes() for p in target.rglob("*") if p.is_file()}
             with self.assertRaises(FileExistsError):
                 staging.stage(Path(directory))
-            self.assertEqual(before, {p.name: p.read_bytes() for p in target.iterdir()})
+            self.assertEqual(before, {str(p.relative_to(target)): p.read_bytes() for p in target.rglob("*") if p.is_file()})
 
     def test_existing_file_is_never_overwritten(self):
         with tempfile.TemporaryDirectory() as directory:
