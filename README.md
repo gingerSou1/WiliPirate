@@ -1,64 +1,89 @@
 # WiliPirate
 
-WiliPirate is a FREE-WILi 2 Wili/OneWili application for the CM0 Linux
-application environment, inspired by Bus Pirate and ESP32 Bit Pirate.
-Selected bus functionality will be reimplemented against supported FREE-WILi
-APIs. It preserves stock MAIN/DISPLAY firmware and is not a firmware port.
+WiliPirate is a FREE-WILi 2 CM0 Linux Wili/OneWili application inspired by
+Bus Pirate and ESP32 Bit Pirate. **Milestone 1B is entirely host-side:** a
+usable mode-aware console with explicit STUB backends and no hardware access.
+Stock firmware is preserved. No upstream Bus Pirate/Bit Pirate code is copied.
 
-**Milestones 0/1:** source research and a minimal no-I/O Python application.
-No Bus Pirate/Bit Pirate code is incorporated. Hardware functionality,
-touchscreen UI, device deployment and hardware testing are deferred.
+## Run locally (Python 3.10+; no dependencies)
 
-## Try locally (Python 3.10+)
+```sh
+python -B apps/wilipirate/app.py --console
+```
+
+On Windows, `py -3.12` may replace `python`.
+
+```text
+HiZ> mode i2c
+Mode: I2C
+I2C> scan
+I2C hardware backend not enabled.
+I2C> mode uart
+Mode: UART
+UART> info
+WiliPirate 0.1.0-m1b | FREE-WILi 2 CM0 application
+Mode: UART
+Backend: STUB
+Hardware: not enabled
+```
+
+The session starts in HiZ. Supported commands are `help`, `info`, `mode`,
+`mode hiz`, `mode uart`, `mode i2c`, `mode spi`, `mode gpio`, and `exit`.
+Mode changes update only application state; even selecting a bus performs no
+initialization or pin/power changes. Invalid modes preserve the current mode.
+`help` lists the current mode's stub requests. `scan` (I2C), `read` and
+`write <arguments...>` (UART/I2C/GPIO), and `transfer <arguments...>` (SPI)
+only report an unavailable backend. Arguments remain opaque and no fake
+ACKs, bytes, measurements or successful transfers are returned.
+
+HiZ does not establish electrical isolation. External pin/power state is
+unknown. All modes use stubs; no real backend or transport can be selected by
+flags, environment variables or discovery. M1A and physical validation are deferred.
+
+## Launcher and batch use
 
 ```sh
 python -B apps/wilipirate/app.py
-python -B apps/wilipirate/app.py --console
-python -B apps/wilipirate/app.py --command help --command info --command mode
+python -B apps/wilipirate/app.py --command "mode uart" --command info --command exit
 ```
 
-On Windows, `py -3.12` may replace `python` when installed.
-The console starts at `HiZ>`. It supports `help`, `info`, `mode`, `mode hiz`
-and `exit`. I2C, SPI, UART and GPIO are listed as unavailable and cannot be
-entered. Unknown commands and hardware operations are rejected.
+Default launch prints help/info/modes and exits without reading stdin, matching
+the documented Linux Apps contract. Explicit `--console` reads terminal input
+and keeps the selected mode until exit. Batch commands share one session and
+stop at the first failure (exit status 2); a stub operation is a failure, not
+hardware success. Normal exit/EOF return 0; console Ctrl-C returns 130.
+Each new invocation starts in HiZ. There is no LCD/touch renderer in M1B.
 
-HiZ is an application no-I/O state, **not a guarantee of electrical isolation**.
-External pin and target-power state is unknown. The app makes no hardware
-calls or power changes. It does not enable, disable or reconfigure pins.
-
-## Check and stage on the development host
+## Check and stage locally
 
 ```sh
 python -B -m unittest discover -s tests -v
-python -B tools/stage.py --output dist/apps
+python -B tools/stage.py --output dist/m1b/apps
 git diff --check
 ```
 
-Staging produces a self-contained `dist/apps/wilipirate/` containing `app.py`,
-`run.sh`, an app README and attribution notes. It refuses an existing target.
-No packages are installed. Generated output is ignored by Git.
-After future deployment approval, this folder goes under `/home/apps/` on
-CM0 Linux, and its executable `run.sh` is selected in Linux > Apps.
-No deployment is performed by the staging tool.
+The staging tool copies only the app entry point, package modules, launcher
+and app/attribution documentation into `dist/m1b/apps/wilipirate/`. It refuses
+an existing destination. No dependencies are fetched or installed, and no
+files are transferred to a device. Use a new output directory to stage again.
+The previous M1 staged folder, if present, is not updated in place.
 
-The normal menu launcher disconnects stdin, so default launch prints its
-minimal interface to the app log and exits. Use `run.sh --console` from a
-terminal for interactive input. See the [app README](apps/wilipirate/README.md).
+After a separate approval and safe framework validation, the eventual device
+location is `/home/apps/wilipirate/run.sh`, selected through Linux > Apps.
+It must have its executable bit preserved. The [app README](apps/wilipirate/README.md)
+travels with the staged folder. Current development does not deploy it.
 
-## Research and boundaries
+## Design and evidence
 
-- [Architecture, API evidence and exact proposed first hardware test](docs/ARCHITECTURE.md)
-- [Capability matrix](docs/CAPABILITY_MATRIX.md)
-- [GUI-packaged Python example review](docs/GUI_EXAMPLES.md)
-- [Pinned source revisions](docs/SOURCES.json)
-- [Upstream licenses and reuse decisions](docs/THIRD_PARTY.md)
-- [Validation record](docs/VALIDATION.md)
+- [Current layered architecture and mandatory fail-closed policy](docs/ARCHITECTURE.md)
+- [Interactive UI research and unresolved htop reference](docs/UI_RESEARCH.md)
+- [Capability matrix (hardware evidence, not stub functionality)](docs/CAPABILITY_MATRIX.md)
+- [Preserved M1A safety finding](docs/HARDWARE_VALIDATION.md)
+- [M1B validation](docs/M1B_VALIDATION.md) and [earlier host checks](docs/VALIDATION.md)
+- [Source revisions](docs/SOURCES.json), [GUI archive review](docs/GUI_EXAMPLES.md),
+  and [upstream licenses/reuse decisions](docs/THIRD_PARTY.md)
 
-The reference BSP submodule is pinned; it is not required to run this no-I/O
-scaffold. Initialize it with `git submodule update --init --recursive` only
-when its source is needed. No BSP source edits are part of this project.
-
-Next proposed milestone: GPIO read-only snapshots through OneWili after
-explicit approval and environment review. I2C scan result decoding, UART
-receive behavior, pin mapping, electrical limits and target-power policy
-still require qualification. No physical FREE-WILi has been accessed.
+The pinned BSP reference is unmodified and unnecessary for M1B execution.
+WiliPirate must never silently fall back from the supported bridge to direct
+hardware access. Missing required bridge/API capability must fail closed.
+No workaround for the discovered fwcm0 fallback is included.

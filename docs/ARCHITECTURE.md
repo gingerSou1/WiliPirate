@@ -1,8 +1,87 @@
-# WiliPirate architecture (Milestone 0)
+# WiliPirate architecture (Milestone 1B)
 
 Research date: 2026-10-03. Source revisions are pinned in SOURCES.json.
 VERIFIED below means the specific API/contract is established by source, not
 that WiliPirate has been run on a physical FREE-WILi. No device was accessed.
+
+## Current M1B architecture (2026-10-04)
+
+M0/M1 research remains the baseline below. M1B supersedes the earlier restriction
+on selecting modes: HiZ, UART, I2C, SPI and GPIO are now logical application
+states, all using explicit stubs. No hardware operations or device UI calls are
+implemented. M1A is deferred; its immutable [finding](HARDWARE_VALIDATION.md)
+and commit ea864b8 are preserved unchanged.
+
+```text
+app.py / run.sh
+  -> wilipirate.console (terminal input and log output)
+  -> wilipirate.application + parser (strict command parsing)
+  -> wilipirate.state.Session (per-session mode and lifecycle)
+  -> wilipirate.backends.Backend (request/result interface)
+  -> HiZStub / UARTStub / I2CStub / SPIStub / GPIOStub
+```
+
+| Layer | Contract |
+| --- | --- |
+| Console | Reads only explicit --console input, displays Reply text and ViewState.prompt. Default Linux Apps invocation needs no stdin. |
+| Parser | Returns immutable Command(name, arguments). Case-insensitive verbs/mode names; opaque payload arguments preserve case. Rejects bad arity, controls, chaining and >256 characters. No eval or shell. |
+| Application | UI-independent submit(line) and immutable view snapshot; catches parse errors without changing state. An eventual panel UI uses the same entry point. |
+| State manager | Starts each session in HiZ; supports all 25 transitions without a backend call. Invalid modes preserve the current mode. Exit/EOF/Ctrl-C close the session; closed sessions reject further commands. |
+| Hardware abstraction | Backend declares mode, operation vocabulary, label, availability, and request(operation, arguments) -> BackendResult. No connection/open/initialize API is exposed in M1B. |
+| Stubs | Five explicit types composed by a fixed factory. Every request returns unavailable and a message; never fake ACKs/data. Missing registry entries report unavailable with no fallback. |
+
+Commands: help, info, mode, mode hiz/uart/i2c/spi/gpio, exit. Mode-specific
+stub requests are scan (I2C), read/write (UART/I2C/GPIO), and transfer (SPI).
+write/transfer take opaque arguments solely to exercise dispatch; no physical
+syntax/encoding or transfer is implemented. Unsupported-mode requests fail.
+info always exposes the current logical mode and STUB status in the shipped
+configuration. Batch sessions stop on first failed/stub request with status 2;
+interactive sessions report it and continue. No real-backend flags, imports,
+plugins, environment switches, network discovery or device enumeration exist.
+
+The runtime uses only standard-library modules and its local package. The
+staging tool copies an explicit file list, not all Python files or the BSP;
+it preserves relocatability and refuses existing destinations. The unchanged
+shell entry point invokes Python with -B, avoiding runtime bytecode writes.
+
+### Mandatory fail-closed rule and M1A hazard
+
+**WiliPirate must never silently fall back from the supported bridge to direct
+hardware access. If a required bridge/API is unavailable, fail closed and
+report the unavailable capability.** Explicit M1B stubs are the build's only
+backends, not an automatic replacement for a failed hardware connection.
+
+In the pinned BSP, [run_console_cli](../vendor/wilicm0bsp/drivers/fwcm0/src/console_cli.cpp)
+tries its bridge socket and calls run_direct(api) when connection fails.
+That constructs [LinuxTransport](../vendor/wilicm0bsp/drivers/fwcm0/src/linux_transport.cpp),
+which configures SPI mode/word size/speed, GPIO chip select and UART termios.
+The OneWili CM0 Python adapter starts fwcm0 api, so even a documented read-only
+Device State request cannot make this connection fallback safe. A socket-file
+existence check does not eliminate the race. Do not invoke the adapter, doctor
+or CLI, patch the BSP, or introduce a custom bypass as part of M1B.
+
+Future integration must separately establish a supported, version-qualified
+bridge-only path that cannot acquire/configure hardware when unavailable;
+busy/disconnect/timeout must terminate the attempt and report the capability
+unavailable. No automatic power enable, peripheral initialization or retry of
+ambiguous writes. M1B provides no transport implementation at all.
+
+Import/call allowlists cover every runtime module. A subprocess audit exercises
+imports and commands while rejecting hardware imports, processes, networking,
+device/file operations and configuration changes; ordinary Python import reads
+are allowed during import only. Tests cover all logical transitions, failure
+paths, dynamic prompts, packaging and the original M1A report's Git blob hash.
+These guards detect accidental integration, not malicious Python execution.
+
+### Eventual interactive Wili UI
+
+See [UI_RESEARCH.md](UI_RESEARCH.md) for supported panel/text/update/button APIs
+and the unlocated htop-style example. M1B ships a functional console/log UI;
+it does not claim an LCD/touch implementation or on-device launch verification.
+An eventual renderer will consume ViewState/Reply and submit commands through
+Application. Display/input calls themselves are peripheral operations and remain
+excluded now, even while the bus backends are stubs. No on-device prerequisites
+are installed or enabled by the application.
 
 ## Decision and application contract
 
@@ -23,7 +102,7 @@ folder as cwd. stdin is disconnected; stdout/stderr go to a unique log under
 device check must examine the log and exit result. MAIN SD /apps/ is a different
 DISPLAY app surface and is not our deployment destination.
 
-Milestone 1 is deliberately dependency-free and uses this supported launcher
+The original Milestone 1 was deliberately dependency-free; M1B retains that boundary and uses this supported launcher
 contract without opening OneWili. Menu launch prints identification, safety
 status, help, info and the mode list to its log and exits. An explicit
 --console option provides the interactive HiZ> terminal. Repeated --command
@@ -39,7 +118,12 @@ not call BSP setup/install, connect to hardware, or fetch dependencies.
 No persistent app data is written in M1. If needed later, use
 ~/.local/share/wilipirate/ and ~/.config/wilipirate/ rather than the code folder.
 
-## Hardware access path
+## Previously researched hardware access path (blocked by M1A)
+
+The following describes upstream behavior, not a safe connection procedure.
+The current pinned adapter must not be invoked: its fallback can initialize
+hardware. Any future integration requires separately verified supported
+bridge-only behavior before the lifecycle described below is applicable.
 
 Python -> onewili_cm0.connect_cm0() -> fwcm0 api -> running fwcm0-bridge
 -> FPGA mailbox -> stock MAIN -> firmware-owned peripherals / DISPLAY.
@@ -65,7 +149,7 @@ directory-list events are not forwarded through this CM0 transport.
 
 | Area | Official API or example | Consequence |
 | --- | --- | --- |
-| Identity | hardware.system.device_state(); [apps/hello_python/app.py](https://github.com/freewili/wilicm0bsp/blob/d27edf1c18bc2c18a76c4c9cdbf200c19884cc06/apps/hello_python/app.py) | Read-only connection check; no settings changed by the example. |
+| Identity | hardware.system.device_state(); [apps/hello_python/app.py](https://github.com/freewili/wilicm0bsp/blob/d27edf1c18bc2c18a76c4c9cdbf200c19884cc06/apps/hello_python/app.py) | Device State query is described as read-only, but connection can initialize hardware via the M1A fallback; the example is not safe to execute under current constraints. |
 | Display text | gui.show_text(text), gui.clear_display(); [docs/gui.md](https://github.com/freewili/onewili/blob/9ce9df83b89f83681507f19f960958e23f20ac37/docs/gui.md) | Overlay is replaced/truncated, not a scrolling console. |
 | Graphics/controls | gui.panels.add_panel(), gui.controls.add_text(), add_button(), add_plot(); [docs/gui_panels.md](https://github.com/freewili/onewili/blob/9ce9df83b89f83681507f19f960958e23f20ac37/docs/gui_panels.md), [docs/gui_controls.md](https://github.com/freewili/onewili/blob/9ce9df83b89f83681507f19f960958e23f20ac37/docs/gui_controls.md) | Command surface exists; target firmware compatibility must be tested. |
 | Input | gui.panels.read_buttons(); [docs/gui_panels.md](https://github.com/freewili/onewili/blob/9ce9df83b89f83681507f19f960958e23f20ac37/docs/gui_panels.md) | Polled, read-and-clear press latch; one consumer. Shared latch, no release/long-press history. Raw touch-coordinate delivery to CM0 remains UNKNOWN. |
@@ -120,8 +204,8 @@ copied, translated or linked in M1. Only the interaction concepts are reused.
 
 HiZ is the application's no-I/O state. Startup, help, info, mode inspection,
 invalid input, exit, EOF and interruption perform zero hardware calls.
-mode hiz succeeds; I2C/SPI/UART/GPIO are listed as unavailable and cannot be
-entered. No fake ACKs, simulated bus results, power control or pin values.
+All five modes can be selected logically in M1B; their hardware backends remain
+unavailable. No mode selection initializes or configures any peripheral. No fake ACKs, simulated bus results, power control or pin values.
 This does not force previously configured pins into electrical high impedance,
 turn off power owned by another app, or establish that connecting a target is safe.
 The UI must say external pin/power state is unknown, not certify physical HiZ.
@@ -131,35 +215,20 @@ voltage/pull-up/direction policy, and failure cleanup. Target power must require
 an explicit user action. Never restore an unknown state or change all power
 zones as a shortcut. Cancellation of a write is not proof it did not occur.
 
-## Milestone 2 recommendation (not implemented)
+## Earlier Milestone 2 proposal (withdrawn pending safety qualification)
 
-First implement GPIO read-only snapshot, following the upstream gpio_poll
-example. This has stronger CM0 evidence than I2C address-list decoding,
-UART reception or arbitrary SPI framing. It proves the request/reply path
-without driving external pins. An I2C scan is the next candidate only after
-its result format and electrical setup are established.
+The M0 candidate was a GPIO snapshot using the upstream gpio_poll example.
+M1A invalidated its connection assumption: opening connect_cm0 can initialize
+hardware through the direct fallback. The earlier timed GPIO-read procedure
+must not be executed. Its historical text remains in the M0/M1 Git history;
+the M1A findings themselves remain unchanged in HARDWARE_VALIDATION.md.
 
-Exact proposed first hardware test, requiring later approval:
-
-1. Record the FREE-WILi 2 board revision, stock MAIN/DISPLAY/FPGA versions,
-   Linux image, Python and fwcm0 versions. Disconnect all external targets.
-   Confirm an already compatible bridge with API support; if absent, stop
-   and request a separate maintenance decision, not an automatic upgrade.
-2. With the operator's normal CM0/FPGA power prerequisites already met, launch
-   the staged no-I/O M1 app from Linux > Apps. Check the log for WiliPirate,
-   HiZ, help/info/mode, normal exit and no hardware actions.
-3. In a separately approved M2 read-only adapter, open connect_cm0(), record
-   hardware.system.device_state().unwrap(), then call io.gpio.read_all().unwrap()
-   exactly ten times at 0.5-second intervals, recording each 32-bit hex value.
-   Close the connection and verify one reopen succeeds. No direction, VIO,
-   pull-up, target-power, clock, bus-write or streaming setters may be called.
-4. Pass requires ten successful typed reads, no errors, orderly close/reopen,
-   and no settings writes. Stop on the first busy, power-zone, timeout or
-   disconnected error. No automatic power changes or retries. This establishes
-   API access only; floating values are not a connector voltage measurement.
-5. A later external-input test needs a documented header mapping, confirmed
-   input configuration and voltage limits, and a reviewed current-limited
-   fixture. No pin number or wiring is proposed without that evidence.
+Physical work is deferred. Before proposing any GPIO read, trace the exact
+installed API and transport and establish no initialization, configuration,
+mux, direction, pull, power or peripheral writes. Upstream read-test reports
+alone are insufficient. A supported bridge-only path, explicit authorization
+and resumed framework validation are prerequisites. No wiring, snapshot,
+scan or physical bus experiment is part of M1B.
 
 ## Unknowns and excluded claims
 
