@@ -5,6 +5,16 @@ Bus Pirate and ESP32 Bit Pirate. **Milestone 1B is entirely host-side:** a
 usable mode-aware console with explicit STUB backends and no hardware access.
 Stock firmware is preserved. No upstream Bus Pirate/Bit Pirate code is copied.
 
+## M1D on-device preparation
+
+[Architecture comparison and launch gates](docs/ON_DEVICE_ARCHITECTURE.md)
+select the official CM0 **C++ socket-only** adapter. The Python connection's
+fallback remains prohibited. [native/cm0](native/cm0/README.md) prepares a
+minimal Help/Mode/Exit UI with all modes stubbed. No ARM64 Linux deployment
+binary has been built or installed. The original Python core and host preview
+remain intact. A WiliBSP RAM UF2 is supported upstream, but its inspected
+startup changes VREF/radio state and does not meet this project's constraints.
+
 ## M1C host panel preview
 
 ```sh
