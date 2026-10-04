@@ -4,6 +4,19 @@ Research date: 2026-10-03. Source revisions are pinned in SOURCES.json.
 VERIFIED below means the specific API/contract is established by source, not
 that WiliPirate has been run on a physical FREE-WILi. No device was accessed.
 
+## M1C host UI boundary
+
+The M1B application below remains unchanged. The official emulator cannot run
+CM0 Python; see [current source research](EMULATOR_RESEARCH.md). M1C adds only
+`ui/` and `tools/ui_preview.py`: synthetic button input -> UI controller ->
+Application.submit/view -> pure text-cell frame -> host Tk canvas. Commands
+always go through the existing parser/state/stubs. No OneWili client or live
+renderer is provided, and the device staging file list remains unchanged.
+The [host validation guide](M1C_VALIDATION.md) records exact reproduction steps,
+checks, and the remaining gap to the supported physical CM0 panel mechanism.
+The located htop example informs text/button contracts only; its transport,
+subprocess and dependency-install code is not reused or executed.
+
 ## Current M1B architecture (2026-10-04)
 
 M0/M1 research remains the baseline below. M1B supersedes the earlier restriction

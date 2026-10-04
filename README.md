@@ -5,6 +5,21 @@ Bus Pirate and ESP32 Bit Pirate. **Milestone 1B is entirely host-side:** a
 usable mode-aware console with explicit STUB backends and no hardware access.
 Stock firmware is preserved. No upstream Bus Pirate/Bit Pirate code is copied.
 
+## M1C host panel preview
+
+```sh
+python -B tools/ui_preview.py
+```
+
+A separate Tk development UI exercises the unchanged M1B application using
+CM0-style text cells and synthetic menu/keypad buttons. HiZ starts selected;
+all five backends remain stubs. Up/Down select commands, Enter runs, F3 cycles
+logical modes, Left/Right scroll, and Esc exits. No device is contacted.
+This is a host preview, not execution in the official FREE-WILi emulator:
+that environment does not run CM0 Python. The original console and staged app
+remain unchanged. See [research](docs/EMULATOR_RESEARCH.md) and
+[exact reproduction steps and validation](docs/M1C_VALIDATION.md).
+
 ## Run locally (Python 3.10+; no dependencies)
 
 ```sh

@@ -1,5 +1,9 @@
 # Interactive Wili UI research for M1B
 
+M1C update: the embedded official GUI **05 Linux htop** example has now been
+located. See [EMULATOR_RESEARCH.md](EMULATOR_RESEARCH.md). The M1B search record
+below is retained as historical evidence.
+
 Date: 2026-10-04. Research only; no example, GUI, display command or hardware
 connection was executed. No dependency/submodule pins were changed.
 
