@@ -1,6 +1,8 @@
 # WiliPirate CM0 native preparation
 
 Prepared source, NOT a built or hardware-qualified deployment candidate.
+M1E produced an ARM64 executable, but unexpected-response validation failed;
+no deployment candidate was packaged. See ../../docs/M1E_VALIDATION.md.
 Uses the pinned official WiliCM0BSP C++ socket-only adapter, not the Python
 adapter or any CLI/direct transport. MAIN and DISPLAY stay stock. The UI has
 Help, Mode and Exit; all five logical modes remain STUBS. No bus implementation.
