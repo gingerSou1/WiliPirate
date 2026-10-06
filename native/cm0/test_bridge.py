@@ -63,9 +63,19 @@ class BridgeTests(unittest.TestCase):
                                     # Valid framing, wrong response command: must not invent input.
                                     path = 'i\\g\\u'
                                     payload = '10'
+                                if failure == 'unexpected-mode' and not any(
+                                        item.startswith('g\\e\\a') for item in commands):
+                                    path = 'i\\g\\u'
+                                    payload = '2'
+                                elif failure == 'unexpected-mode':
+                                    payload = '10'
                             if failure == 'probe' and command == 'h\\a\\g':
                                 payload = 'invalid'
+                            if failure == 'unexpected-probe' and command == 'h\\a\\g':
+                                path = 'g\\c\\e'
                             response = f'[{path} 1 1 {payload} 1]\n'.encode()
+                            if failure == 'malformed-frame' and path == 'g\\c\\e':
+                                response = b'[g\\c\\e 1]\n'
                             # Fragment replies across transport reads, as the BSP test does.
                             client.sendall(response[:3])
                             client.sendall(response[3:])
@@ -125,6 +135,25 @@ class BridgeTests(unittest.TestCase):
     def test_unexpected_response_path_fails_closed(self):
         result, commands, released = self.exercise('unexpected')
         self.assertEqual(result.returncode, 1, 'Wrong-path response was accepted as button input')
+        self.assertTrue(released)
+
+    def test_wrong_command_cannot_change_logical_mode(self):
+        result, commands, released = self.exercise('unexpected-mode')
+        self.assertFalse(any(item.startswith('g\\e\\a') for item in commands),
+                         'Wrong-command payload caused a UI/model update')
+        self.assertEqual(result.returncode, 1)
+        self.assertTrue(released)
+
+    def test_wrong_command_probe_cannot_start_ui(self):
+        result, commands, released = self.exercise('unexpected-probe')
+        self.assertEqual(commands, ['h\\a\\g'], 'Wrong-command probe allowed UI startup')
+        self.assertEqual(result.returncode, 1)
+        self.assertTrue(released)
+
+    def test_malformed_frame(self):
+        result, commands, released = self.exercise('malformed-frame')
+        self.assertEqual(result.returncode, 1)
+        self.assertEqual(commands[-2:], ['g\\c\\e', 'g\\t'])
         self.assertTrue(released)
 
 
