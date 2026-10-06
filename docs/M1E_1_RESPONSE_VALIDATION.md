@@ -6,6 +6,33 @@ submodule revisions and BSP sources are unchanged. No deployment candidate,
 physical connection, hardware operation, additional package installation,
 firmware change or main merge occurred.
 
+## End-of-session resume checkpoint
+
+```yaml
+CURRENT: M1E.1 complete
+
+BLOCKER: >-
+  OneWili C response handling does not enforce request/response
+  command-path equality.
+
+CONSTRAINT: >-
+  Official and vendored FREE-WILi/OneWili/WiliCM0BSP sources are
+  read-only and must not be modified.
+
+NEXT: >-
+  Determine whether WiliPirate can implement its own fail-closed
+  response-validation boundary without modifying upstream/vendored code.
+  If not, reconsider the supported application architecture.
+```
+
+A real AArch64 binary was built in the authenticated Debian 13/Trixie root;
+ARM64 ABI/runtime qualification passed against that recorded baseline.
+The binary is **not deployment-qualified**. All three wrong-command
+regressions remain intact and failing. No physical FREE-WILi testing occurred.
+The next-session direction above supersedes this investigation's earlier
+proposal to seek an upstream parser correction; do not modify dependencies.
+Development is stopped for tonight. No parser fix or further milestone work.
+
 ## Root cause, from the pinned source
 
 Pinned WiliCM0BSP: d27edf1c18bc2c18a76c4c9cdbf200c19884cc06.
