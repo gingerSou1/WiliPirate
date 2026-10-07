@@ -1,0 +1,202 @@
+[
+  {
+    "path": "apps/Audio/tone_poc.uf2",
+    "bytes": 430592,
+    "sha256": "f91d92138899396b7d116e96a133eaee1c5b675342e98aaa729a3fc91a331a17",
+    "min_target": "0x11000000",
+    "max_target": "0x11034800",
+    "source_urls": [],
+    "valid_magic": true
+  },
+  {
+    "path": "apps/Audio/wilidexed.uf2",
+    "bytes": 333824,
+    "sha256": "6b9074c89c8cbb20ac6dba1c7d7e12f72ec8ebf6a4832bf2dc39b4effe1fa610",
+    "min_target": "0x20000000",
+    "max_target": "0x20028b00",
+    "source_urls": [
+      "https://github.com/freewili/wilibsp"
+    ],
+    "valid_magic": true
+  },
+  {
+    "path": "apps/CAN Bus/wilicankit.uf2",
+    "bytes": 921088,
+    "sha256": "6f7e27db37e8d46011dc4de2dd422f2ae4e2e3cce3830a8577366b6773174732",
+    "min_target": "0x11000000",
+    "max_target": "0x11070600",
+    "source_urls": [],
+    "valid_magic": true
+  },
+  {
+    "path": "apps/Games/DOOM.UF2",
+    "bytes": 610304,
+    "sha256": "a59939dd9ed693551807a88423389c31ed6560c9ea7399a662d8b719d7d527e3",
+    "min_target": "0x11000000",
+    "max_target": "0x1104a700",
+    "source_urls": [],
+    "valid_magic": true
+  },
+  {
+    "path": "apps/Games/flappywili.uf2",
+    "bytes": 118272,
+    "sha256": "43f30657a33f9fc89fc46115d19dfd57a441fe8e66e76fed187f7416cd66a3c1",
+    "min_target": "0x20000000",
+    "max_target": "0x2000e600",
+    "source_urls": [],
+    "valid_magic": true
+  },
+  {
+    "path": "apps/Games/fw2nes.uf2",
+    "bytes": 615424,
+    "sha256": "b293666b6b875225a9efe06dc242ef3aa31e9e0d3083abdaaed98be95b1175fc",
+    "min_target": "0x11000000",
+    "max_target": "0x1104b100",
+    "source_urls": [],
+    "valid_magic": true
+  },
+  {
+    "path": "apps/Games/startrek.uf2",
+    "bytes": 226816,
+    "sha256": "a018a5098ae42b1ac24baf9d08fbace5cf530d47074b0e059afa046b36d92ea0",
+    "min_target": "0x20000000",
+    "max_target": "0x2001ba00",
+    "source_urls": [
+      "https://github.com/freewili/startrek"
+    ],
+    "valid_magic": true
+  },
+  {
+    "path": "apps/Games/wili-snake-v001.uf2",
+    "bytes": 106496,
+    "sha256": "8a1b4ea00bd45048385036036479ad904ccd731e2c61092351decd3e4608348f",
+    "min_target": "0x20000000",
+    "max_target": "0x2000cf00",
+    "source_urls": [],
+    "valid_magic": true
+  },
+  {
+    "path": "apps/Games/wili8.uf2",
+    "bytes": 673280,
+    "sha256": "8e5c67b27543c9db9413fa427a28097e68f6ec0938fd880d947d46c24b8070a8",
+    "min_target": "0x20000000",
+    "max_target": "0x20052200",
+    "source_urls": [
+      "https://github.com/freewili/wili8jam"
+    ],
+    "valid_magic": true
+  },
+  {
+    "path": "apps/Games/wiliman-v002.uf2",
+    "bytes": 143872,
+    "sha256": "faa429021755d2329f0ec1419b1d23aa2aa6475e6a9d5387084072dc40a983ae",
+    "min_target": "0x20000000",
+    "max_target": "0x20011800",
+    "source_urls": [],
+    "valid_magic": true
+  },
+  {
+    "path": "apps/IR/wiliir.uf2",
+    "bytes": 774144,
+    "sha256": "291bb6b7e1e1f4233597da83041e9011dc3fd5baba04192f5d82d37712e9fa5e",
+    "min_target": "0x11000000",
+    "max_target": "0x1105e670",
+    "source_urls": [
+      "https://github.com/freewili/WiliIR"
+    ],
+    "valid_magic": true
+  },
+  {
+    "path": "apps/Misc/guitarman.uf2",
+    "bytes": 948736,
+    "sha256": "0f22e169ea30980a70ac0a6728176d044c9f330fc3d9ccc5e0f47913b8605d84",
+    "min_target": "0x11000000",
+    "max_target": "0x11073a9c",
+    "source_urls": [
+      "https://github.com/freewili/guitarman"
+    ],
+    "valid_magic": true
+  },
+  {
+    "path": "apps/Misc/orca-field-notes.uf2",
+    "bytes": 945152,
+    "sha256": "469f86031efdddabb5071ed55c0ea96231699c66a03c36aef542331b7e65740b",
+    "min_target": "0x11000000",
+    "max_target": "0x11073464",
+    "source_urls": [
+      "https://github.com/freewili/freewili2-orca-field-notes"
+    ],
+    "valid_magic": true
+  },
+  {
+    "path": "apps/Misc/orcafood.uf2",
+    "bytes": 252416,
+    "sha256": "be30c4eecb28bb658ab8d08a37e24d5500322a0d2828a5c9c63f710ce7b9fd86",
+    "min_target": "0x20000000",
+    "max_target": "0x2001ec00",
+    "source_urls": [],
+    "valid_magic": true
+  },
+  {
+    "path": "apps/Misc/usbcam-viewer.uf2",
+    "bytes": 136704,
+    "sha256": "c78dba3edc04d67ade1587275b14ae281e2217f5a3a090f6b4b420ade0674bf4",
+    "min_target": "0x20000000",
+    "max_target": "0x20010a00",
+    "source_urls": [
+      "https://github.com/freewili/usbcamfw"
+    ],
+    "valid_magic": true
+  },
+  {
+    "path": "apps/Misc/wilidoro.uf2",
+    "bytes": 913408,
+    "sha256": "17922c37513825a910595f0126eb3fc223c97bf25e99c89d8420d1c82bf76361",
+    "min_target": "0x11000000",
+    "max_target": "0x1106f55c",
+    "source_urls": [
+      "https://github.com/freewili/wilidoro"
+    ],
+    "valid_magic": true
+  },
+  {
+    "path": "apps/Radio/meshtastic.uf2",
+    "bytes": 2167296,
+    "sha256": "2c3ea28e461f03d513020973c934123cd87e725ac142fa6a6c9a75a3001564ba",
+    "min_target": "0x11000000",
+    "max_target": "0x11108800",
+    "source_urls": [
+      "https://github.com/Ytuf/firmware"
+    ],
+    "valid_magic": true
+  },
+  {
+    "path": "apps/Radio/subghz.uf2",
+    "bytes": 705536,
+    "sha256": "e569617da9e9980e118093ceda8aa6b60cfa7c9850f8a23365c1971845c724d3",
+    "min_target": "0x11000000",
+    "max_target": "0x11055f64",
+    "source_urls": [
+      "https://github.com/freewili/subghz"
+    ],
+    "valid_magic": true
+  },
+  {
+    "path": "apps/Store/wili_apps_galore.uf2",
+    "bytes": 102912,
+    "sha256": "e5eb20abc254f9eb592cfb0a8fe4775b44f68724e16f61cc1f3eb33d07cab8af",
+    "min_target": "0x20000000",
+    "max_target": "0x2000c800",
+    "source_urls": [],
+    "valid_magic": true
+  },
+  {
+    "path": "apps/Wedding/wedding_disco.uf2",
+    "bytes": 94720,
+    "sha256": "e3735be3b229a2498275e895167650c7fb63dc43111be34554fc7347466d8b74",
+    "min_target": "0x20000000",
+    "max_target": "0x2000b800",
+    "source_urls": [],
+    "valid_magic": true
+  }
+]

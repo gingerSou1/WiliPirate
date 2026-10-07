@@ -4,6 +4,11 @@ Date: 2026-10-07. Baseline: `feature/wilipirate-panel` at `68f9cd4`.
 Documentation-only investigation. No compilation, staging, deployment, device
 enumeration, physical connection, firmware changes or upstream edits.
 
+Follow-up: [existing application lifecycle investigation](FW2_APP_LIFECYCLES.md)
+inspects the official app-contract branches and their exact BSP pins, not only
+default-branch apps. It confirms actual loadable touch-UI/MAIN compositions,
+while finding the same reachable expander initialization and reboot exit.
+
 ## Decision
 
 | Gate | Verdict | Scope |
