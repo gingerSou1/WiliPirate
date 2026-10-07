@@ -4,6 +4,12 @@ Date: 2026-10-07. Source inspection only; no device enumeration or connection.
 Status: STOP before implementation. I2C scan result path and unchanged-VIO
 launch cannot be established with the inspected public interfaces.
 
+Follow-up: [the offline gate investigation](PANEL_OFFLINE_GATES.md) establishes
+public generic command/response hooks. Their use is acceptable in principle;
+the exact stock Poll body remains unverified. It also examines smaller startup
+paths and stock menu/panel alternatives. Its findings supersede any blanket
+exclusion of raw command hooks below.
+
 ## Current official sources
 
 GitHub API `commits/HEAD` was queried and revision-addressed archives inspected
