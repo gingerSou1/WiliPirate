@@ -1,5 +1,19 @@
 # WiliPirate development
 
+## Current architecture pivot (2026-10-07)
+
+Work on `feature/wilipirate-panel` follows
+[the preservation decision](docs/PANEL_ARCHITECTURE_DECISION.md) and
+[the current FW2 reuse research](docs/PANEL_REUSE_MATRIX.md).
+`archive/cm0-prototype` preserves the exact CM0/M1E checkpoint at bc738b8.
+The CM0 and host-preview rules below continue to govern their preserved trees;
+they do not select the runtime for a future native FW2 panel.
+Native scaffolding is blocked on a supported unchanged-VIO startup path and
+stock I2C Poll address-result contract. Do not bypass these gates, fix the M1E
+parser, modify upstream sources or create a CM0 deployment package.
+No physical device work, firmware/platform changes, pushes or merges are allowed.
+Local panel-branch documentation commits are authorized.
+
 Read [the pinned WiliCM0BSP guide](vendor/wilicm0bsp/AGENTS.md), its
 [app contract](vendor/wilicm0bsp/docs/apps.md), and
 [our architecture](docs/ARCHITECTURE.md) before changing the app.
