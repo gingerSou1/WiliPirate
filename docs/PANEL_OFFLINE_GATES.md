@@ -1,5 +1,9 @@
 # Offline architecture gates: stock I2C results and startup preservation
 
+Historical preservation requirement: M2 now explicitly permits the normal BSP
+initialization described here for a UI-only app. Gate A remains for M3 hardware
+integration. See [the clarified M2 requirements](M2_DISPLAY.md).
+
 Date: 2026-10-07. Baseline: `feature/wilipirate-panel` at `68f9cd4`.
 Documentation-only investigation. No compilation, staging, deployment, device
 enumeration, physical connection, firmware changes or upstream edits.

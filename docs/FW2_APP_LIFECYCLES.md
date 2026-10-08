@@ -1,5 +1,9 @@
 # Existing FW2 application lifecycle investigation
 
+M2 clarification: standard BSP initialization is explicitly allowed for the
+new UI-only application. The lifecycle/side-effect findings below remain valid;
+their earlier preservation gate is historical. See [M2 DISPLAY](M2_DISPLAY.md).
+
 Date: 2026-10-07. Branch: `feature/wilipirate-panel`; baseline `592824b`.
 Source/artifact inspection only. No builds, installed packages, device access,
 application execution, BSP edits, pushes or merges.

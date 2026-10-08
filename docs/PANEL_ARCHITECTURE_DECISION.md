@@ -1,6 +1,34 @@
 # Architecture decision: preserve CM0, investigate a native FW2 panel
 
-Date: 2026-10-07. Status: pivot accepted; native implementation BLOCKED.
+Date: 2026-10-07. Status: M2 UI-only DISPLAY application authorized.
+
+## M2 requirement clarification
+
+The attached M2 request supersedes the earlier zero-transient-VIO/power launch
+requirement for the new native UI. Standard unmodified WiliBSP board/expander,
+DISPLAY, touch and recovery initialization is explicitly allowed. A temporary
+DISPLAY SRAM application through the supported SD loader preserves stored stock
+firmware while taking over DISPLAY execution. It need not preserve the live
+pre-launch VREF/power selection. No electrical SAFE/HiZ status is asserted.
+
+M2 uses `native/display/`, separate from the unchanged CM0 runtime and host Tk
+preview. It has six selectable interfaces, unavailable placeholders, Back,
+HOME recovery instructions and the official About lifecycle. Existing BSP
+display/font/touch facilities handle rendering/input; no custom bus driver,
+OneWili connection or interface operation is included. Standard BSP initialization
+is no longer an architectural blocker; the previous research remains valid as
+the explanation of its side effects, not as current M2 authorization policy.
+
+The BSP can select external VREF, overwrite expander outputs/directions, reset
+radio routing, LEDs/backlight and internal buses, and apply/release normal app
+power zones. Future initial physical validation must disconnect all external
+targets and have explicit approval. No firmware flashing, permanent platform
+changes, upstream source edits, deployment, push or merge is authorized here.
+
+The exact stock I2C Poll response remains unverified. That is an M3 prerequisite,
+not an M2 UI gate. M3 must prove response acquisition/interpretation for existing
+stock MAIN scanning; it must not replace the scanner or assume the generated
+status-only wrapper returns addresses. See [M2 guide](M2_DISPLAY.md).
 
 ## Preservation and branch point
 
@@ -73,7 +101,7 @@ applications such as SDR/ADS-B, processing pipelines or other workloads that
 actually need its services. A hardware panel should first reuse stock MAIN
 operations and official FW2 libraries rather than create another bus stack.
 
-## New direction and gate
+## Earlier direction and gate (superseded for M2 UI)
 
 Investigate a supported DISPLAY RAM application with GPIO, UART, I2C, SPI,
 CAN and Logic tiles; no custom bus drivers. Logical HiZ means this application
@@ -85,4 +113,6 @@ authorized design and must never be implicit launch behavior.
 nonpersistent app mechanism, but does not establish safe unchanged-VIO startup
 or a supported I2C address-result path. Accordingly no native panel scaffold,
 binary or package is produced. This is the user's explicit offline stop gate,
-not a request to relax it. All old implementation/evidence files remain intact.
+not a request to relax it. That was the research checkpoint's stop condition;
+the explicit M2 clarification above now supersedes it for the UI-only native
+application. All old implementation/evidence files remain intact.

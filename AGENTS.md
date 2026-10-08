@@ -1,5 +1,8 @@
 # WiliPirate development
 
+For native DISPLAY work, read [wilibsp/AGENTS.md](wilibsp/AGENTS.md) completely.
+If output is truncated, continue in chunks through EOF before changing code.
+
 ## Current architecture pivot (2026-10-07)
 
 Work on `feature/wilipirate-panel` follows
@@ -8,11 +11,19 @@ Work on `feature/wilipirate-panel` follows
 `archive/cm0-prototype` preserves the exact CM0/M1E checkpoint at bc738b8.
 The CM0 and host-preview rules below continue to govern their preserved trees;
 they do not select the runtime for a future native FW2 panel.
-Native scaffolding is blocked on a supported unchanged-VIO startup path and
-stock I2C Poll address-result contract. Do not bypass these gates, fix the M1E
+M2 is explicitly authorized as a UI-only native DISPLAY RAM application under
+`native/display/`, using the pinned unmodified WiliBSP at `wilibsp/`.
+Standard board/expander/display/touch/recovery initialization and its normal
+VREF/power side effects are allowed; document them and require disconnected
+external targets for the eventual first physical test. This supersedes the
+earlier unchanged-VIO launch gate for M2. Do not add interface operations,
+OneWili connections or extra VIO/radio/power setup. The stock I2C response gate
+remains a prerequisite for M3, not for this UI-only milestone.
+Preserve CM0/M1B/M1C code, tests, dependencies and evidence. Do not fix the M1E
 parser, modify upstream sources or create a CM0 deployment package.
-No physical device work, firmware/platform changes, pushes or merges are allowed.
-Local panel-branch documentation commits are authorized.
+Local source/documentation commits and offline builds/tests are authorized.
+No physical device work, persistent firmware/platform changes, direct flashing,
+deployment, pushes or merges are allowed without explicit approval.
 
 Read [the pinned WiliCM0BSP guide](vendor/wilicm0bsp/AGENTS.md), its
 [app contract](vendor/wilicm0bsp/docs/apps.md), and
@@ -20,7 +31,8 @@ Read [the pinned WiliCM0BSP guide](vendor/wilicm0bsp/AGENTS.md), its
 If the submodule is absent, the immutable source links in docs/ARCHITECTURE.md
 and docs/SOURCES.json identify the same upstream revision.
 
-- This is a Python CM0 Linux app, not MAIN/DISPLAY/ESP32 replacement firmware.
+- The preserved `apps/wilipirate/` tree is a Python CM0 Linux app, not
+  MAIN/DISPLAY/ESP32 replacement firmware. M2 uses a separate DISPLAY RAM app.
 - Entry: apps/wilipirate/run.sh; staged runtime: /home/apps/wilipirate/run.sh.
 - M1B uses logical mode state and explicit stub backends only. No hardware,
   OneWili connection, power zone, pins or persistent data.
@@ -68,6 +80,7 @@ Read docs/ON_DEVICE_ARCHITECTURE.md for the native-vs-CM0 decision. Source-only
 native/cm0 uses the official WiliCM0BSP C++ socket adapter; it never calls the
 unsafe Python adapter/CLI. This explicitly authorized preparation is separate
 from unchanged M1B/M1C code. No physical deployment or execution. The native
-WiliBSP template changes VREF/radio on startup and is not approved for use.
+WiliBSP template changes VREF/radio on startup. It was not approved for M1D;
+the separate M2 UI explicitly permits normal BSP initialization.
 Run the full host suite; distinguish compile-only checks from Linux runtime
 qualification. Do not call the prepared binary on any real bridge.

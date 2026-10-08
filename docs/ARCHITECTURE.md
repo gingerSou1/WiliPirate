@@ -1,5 +1,9 @@
 # WiliPirate architecture (Milestone 1B)
 
+For the current native UI direction, see [M2 DISPLAY](M2_DISPLAY.md) and
+[the clarified decision](PANEL_ARCHITECTURE_DECISION.md). The M1B architecture
+below remains the contract for the preserved Python runtime only.
+
 Research date: 2026-10-03. Source revisions are pinned in SOURCES.json.
 VERIFIED below means the specific API/contract is established by source, not
 that WiliPirate has been run on a physical FREE-WILi. No device was accessed.

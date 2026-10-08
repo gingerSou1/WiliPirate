@@ -2,13 +2,17 @@
 
 ## Current direction
 
-WiliPirate is investigating a native FW2 add-on panel that reuses stock hardware
-operations. See [the architecture decision](docs/PANEL_ARCHITECTURE_DECISION.md)
-and [current source research/reuse matrix](docs/PANEL_REUSE_MATRIX.md).
-Implementation is blocked on supported I2C scan results and preservation of
-VIO at app startup. The CM0 prototype is shelved and preserved at
+WiliPirate M2 is a native FW2 DISPLAY RAM application with six touch-selectable
+interface placeholders. Standard BSP initialization is explicitly permitted;
+hardware tools and OneWili integration remain deferred to M3. See
+[M2 source/build/validation](docs/M2_DISPLAY.md),
+[the architecture decision](docs/PANEL_ARCHITECTURE_DECISION.md) and
+[source research/reuse matrix](docs/PANEL_REUSE_MATRIX.md).
+The CM0 prototype is shelved and preserved at
 `archive/cm0-prototype` (`bc738b8`); the existing instructions below describe
 that historical prototype. No physical deployment has occurred.
+
+## Preserved CM0 prototype
 
 WiliPirate is a FREE-WILi 2 CM0 Linux Wili/OneWili application inspired by
 Bus Pirate and ESP32 Bit Pirate. **Milestone 1B is entirely host-side:** a

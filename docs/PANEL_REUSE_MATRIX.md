@@ -1,5 +1,9 @@
 # FW2 panel research and reuse matrix
 
+M2 clarification: normal BSP initialization is now explicitly authorized for
+the UI-only DISPLAY app. The earlier preservation gate below is historical;
+the stock Poll result gate still applies to M3. See [M2 guide](M2_DISPLAY.md).
+
 Date: 2026-10-07. Source inspection only; no device enumeration or connection.
 Status: STOP before implementation. I2C scan result path and unchanged-VIO
 launch cannot be established with the inspected public interfaces.
