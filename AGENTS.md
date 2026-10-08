@@ -5,6 +5,14 @@ If output is truncated, continue in chunks through EOF before changing code.
 
 ## Current architecture pivot (2026-10-07)
 
+M2 is COMPLETE / PHYSICALLY VALIDATED by the user on FX0141; see
+[the closeout record](docs/M2_DEVICE_VALIDATION.md). Preserve source baseline
+`b069a71` and the exact artifact in `releases/m2-ui-v001/`. M3 is planned,
+not started; further development/builds/device operations require a new request.
+The current closeout explicitly authorizes a documentation/artifact commit and
+push of `feature/wilipirate-panel` to the verified gingerSou1/WiliPirate origin
+only. No merge, history rewrite or official FreeWili repository push is allowed.
+
 Work on `feature/wilipirate-panel` follows
 [the preservation decision](docs/PANEL_ARCHITECTURE_DECISION.md) and
 [the current FW2 reuse research](docs/PANEL_REUSE_MATRIX.md).

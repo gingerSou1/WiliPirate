@@ -1,5 +1,11 @@
 # M2: native DISPLAY UI prototype
 
+**M2 — Native DISPLAY UI: COMPLETE / PHYSICALLY VALIDATED.**
+The user reports all physical checks passed on FX0141. See
+[physical results and exact preserved baseline](M2_DEVICE_VALIDATION.md).
+The offline checks below are automated/source evidence; the physical results
+are user observations. M3 is planned, not started.
+
 Date: 2026-10-07. Baseline `5141f45`, branch `feature/wilipirate-panel`.
 The attached M2 request explicitly permits standard WiliBSP initialization.
 The earlier zero-transient-VREF launch gate is superseded for this UI milestone;
@@ -26,8 +32,9 @@ not directly reset the CPU. HOME held five seconds triggers the official BSP
 watchdog recovery, returning through the loader to stock DISPLAY. PAGE held
 five seconds shows the version/source About screen. No electrical SAFE/HiZ
 status appears. If touch initialization fails, the footer reports unavailable
-touch while HOME recovery remains active. Physical input/display behavior is
-still unqualified; host previews are not device screenshots.
+touch while HOME recovery remains active. Normal physical display/touch/HOME
+behavior passed according to the user on FX0141; the missing-touch failure
+path was not separately reported as tested. Host previews are not device screenshots.
 
 M2 does not link/open OneWili, initialize any interface backend, configure
 target power, explicitly select VIO, initialize/transmit radio, poll I2C,
@@ -150,7 +157,9 @@ Sections: text 23,156 bytes, rodata 2,292, data 1,056, BSS 6,472; heap and each
 core stack reserve 2,048. Linked-symbol inspection found no OneWili `ow_*`,
 CC1101/IR/PDM/USB-store initialization or stdio-UART initialization symbols.
 Normal internal board/display/touch/keyboard/power code is present, as intended.
-No device code was executed. Raw build log, symbols and artifact measurements
+No device code was executed during those offline checks. The subsequent
+authorized SD installation and user-run physical checks are recorded separately.
+Raw build log, symbols and artifact measurements
 are retained in ignored `build/display-build.log`, `build/display-symbols.txt`
 and `build/display-validation.json`.
 
@@ -173,7 +182,7 @@ relevant. Reuse the existing stock scan operation; do not write another scan
 loop, patch upstream or add undocumented fallback paths. Other tools remain
 placeholders until separately authorized milestones.
 
-## Proposed first physical validation (not authorized or performed)
+## Original first physical validation plan (now completed by user report)
 
 1. Obtain explicit approval and record installed firmware/loader compatibility.
    Disconnect all external targets, GPIO/header wiring, VREF sources and protocol
@@ -190,4 +199,7 @@ placeholders until separately authorized milestones.
    versions and observed settings; do not claim prior VIO/power restoration.
 5. Stop and review evidence before any target connection or M3 scan approval.
 
-STOP after offline validation. No deployment, physical access, push or merge.
+The earlier offline-only stop was superseded by explicit SD-installation
+approval and the user's successful physical report. M2 is now closed. The
+closeout authorizes documentation/artifact preservation and one user-repository
+branch push, not new builds, M3 development, device operations or a merge.

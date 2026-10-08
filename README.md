@@ -2,15 +2,24 @@
 
 ## Current direction
 
+**M2 — Native DISPLAY UI: COMPLETE / PHYSICALLY VALIDATED.**
+The user reports all M2 checks passed on FREE-WILi 2 **FX0141**, including
+display, touch, About, HOME recovery and return to normal stock operation.
+See [physical validation and baseline](docs/M2_DEVICE_VALIDATION.md) and
+[the exact validated M2 artifact](releases/m2-ui-v001/README.md).
+
 WiliPirate M2 is a native FW2 DISPLAY RAM application with six touch-selectable
 interface placeholders. Standard BSP initialization is explicitly permitted;
-hardware tools and OneWili integration remain deferred to M3. See
+hardware tools and OneWili integration remain deferred to **M3: planned, not
+started**. M3 will reuse supported stock I2C functionality after establishing
+its result contract. See
 [M2 source/build/validation](docs/M2_DISPLAY.md),
 [the architecture decision](docs/PANEL_ARCHITECTURE_DECISION.md) and
 [source research/reuse matrix](docs/PANEL_REUSE_MATRIX.md).
 The CM0 prototype is shelved and preserved at
 `archive/cm0-prototype` (`bc738b8`); the existing instructions below describe
-that historical prototype. No physical deployment has occurred.
+that historical prototype. The CM0 prototype has not been physically deployed;
+M2's separate native DISPLAY application has been installed and user-validated.
 
 ## Preserved CM0 prototype
 

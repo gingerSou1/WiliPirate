@@ -10,6 +10,7 @@ venv/
 build/
 dist/
 *.uf2
+!releases/m2-ui-v001/WiliPirate.uf2
 *.elf
 *.bin
 *.zip

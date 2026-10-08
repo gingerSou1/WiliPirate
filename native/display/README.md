@@ -11,4 +11,6 @@ normal board/expander/power initialization are real hardware operations when
 eventually run on a device. No electrical SAFE/HiZ claim is made.
 
 See [build, side effects, verification and M3 plan](../../docs/M2_DISPLAY.md).
-No physical deployment or device execution has been authorized or performed.
+M2 is COMPLETE / PHYSICALLY VALIDATED by the user on FX0141 after an authorized
+SD installation. See [the closeout record](../../docs/M2_DEVICE_VALIDATION.md).
+The validated source/artifact are frozen; M3 is planned, not started.
