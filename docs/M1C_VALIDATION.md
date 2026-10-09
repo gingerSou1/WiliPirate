@@ -8,7 +8,7 @@ Baseline: main at 2c121b7. Development branch: feature/wili-ui.
 From the WiliPirate repository (Python with Tk support required):
 
 ```powershell
-cd C:\Users\Corey\OneDrive\Desktop\WiliPirate
+cd C:\path\to\WiliPirate
 py -3.12 -B tools/ui_preview.py
 ```
 

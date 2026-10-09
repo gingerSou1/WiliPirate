@@ -29,3 +29,35 @@ Bus Pirate is a trademark of Where Labs LLC per its README. WiliPirate is an
 independent application concept, not a claim of endorsement or compatibility
 with Bus Pirate electrical hardware. A distribution license for original
 WiliPirate code has not been selected; this milestone does not invent one.
+
+## Unresolved public distribution questions
+
+WiliPirate — Created by gingerSou1. This attribution applies to original
+WiliPirate work, not official FreeWili code or other dependencies. The cleanup
+does not select a project license or grant redistribution permission.
+
+The preserved v001 [notice directory](../releases/m2-ui-v001/notices/) contains:
+
+| Preserved notice | What is established | Remaining question |
+| --- | --- | --- |
+| `LICENSE` | WiliBSP MIT notice, copyright 2026 Dave Robins. | This is the BSP license, not a WiliPirate project license. |
+| `Pico-SDK-LICENSE.txt` | Pico SDK BSD-3-Clause copyright, conditions and disclaimer. | Retain it with any authorized binary distribution; assess component-specific terms as well. |
+| `SEGGER-RTT-NOTICE.txt` | SEGGER attribution and technical header commentary. | This text contains no explicit redistribution grant. Establish the applicable RTT version/provenance and license terms before claiming permission. |
+| `WiliBSP-THIRD-PARTY-NOTICES.md` | Names RTT, FatFs and separately licensed harvested drivers. | Confirm which components are linked into v001 and whether all required notices accompany it; the list alone does not establish completeness. |
+
+The pinned [RTT source](https://github.com/freewili/wilibsp/blob/be4bdd63d31a80f95410e583710cf4e43a7be7fa/bsp/third_party/segger_rtt/SEGGER_RTT.c)
+and [header](https://github.com/freewili/wilibsp/blob/be4bdd63d31a80f95410e583710cf4e43a7be7fa/bsp/third_party/segger_rtt/SEGGER_RTT.h)
+carry the same attribution/technical commentary. A public upstream repository
+or its root MIT license must not be assumed to resolve separately licensed RTT
+terms. This is an unresolved permission question, not a conclusion that use
+violates a license.
+
+Before a public release, obtain approval for the original-code license and
+resolve RTT redistribution permission. Complete a linked-component notice
+inventory from retained build/link evidence (including SDK components and the
+BSP font), without rebuilding or changing the validated artifact. If evidence
+is insufficient, record the gap rather than assuming unused archive members
+were linked. Do not add guessed licenses or modify official dependency sources.
+
+Keep the existing UF2, manifest and upstream notices intact while these questions
+are reviewed. Any future notices or license changes require explicit approval.

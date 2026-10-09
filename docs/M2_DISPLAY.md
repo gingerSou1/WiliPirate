@@ -1,7 +1,7 @@
 # M2: native DISPLAY UI prototype
 
 **M2 — Native DISPLAY UI: COMPLETE / PHYSICALLY VALIDATED.**
-The user reports all physical checks passed on FX0141. See
+The user reports all M2 UI checks passed on a FREE-WILi 2. See
 [physical results and exact preserved baseline](M2_DEVICE_VALIDATION.md).
 The offline checks below are automated/source evidence; the physical results
 are user observations. M3 is planned, not started.
@@ -33,7 +33,7 @@ watchdog recovery, returning through the loader to stock DISPLAY. PAGE held
 five seconds shows the version/source About screen. No electrical SAFE/HiZ
 status appears. If touch initialization fails, the footer reports unavailable
 touch while HOME recovery remains active. Normal physical display/touch/HOME
-behavior passed according to the user on FX0141; the missing-touch failure
+behavior passed according to the user on the test device; the missing-touch failure
 path was not separately reported as tested. Host previews are not device screenshots.
 
 M2 does not link/open OneWili, initialize any interface backend, configure

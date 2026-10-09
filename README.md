@@ -1,137 +1,62 @@
-# WiliPirate
+# WiliPirate — Created by gingerSou1
 
-## Current direction
+**Current status: M2 UI Preview. Supported hardware: FREE-WILi 2.**
 
-**M2 — Native DISPLAY UI: COMPLETE / PHYSICALLY VALIDATED.**
-The user reports all M2 checks passed on FREE-WILi 2 **FX0141**, including
-display, touch, About, HOME recovery and return to normal stock operation.
-See [physical validation and baseline](docs/M2_DEVICE_VALIDATION.md) and
-[the exact validated M2 artifact](releases/m2-ui-v001/README.md).
+Repository: [gingerSou1/WiliPirate](https://github.com/gingerSou1/WiliPirate).
 
-WiliPirate M2 is a native FW2 DISPLAY RAM application with six touch-selectable
-interface placeholders. Standard BSP initialization is explicitly permitted;
-hardware tools and OneWili integration remain deferred to **M3: planned, not
-started**. M3 will reuse supported stock I2C functionality after establishing
-its result contract. See
-[M2 source/build/validation](docs/M2_DISPLAY.md),
-[the architecture decision](docs/PANEL_ARCHITECTURE_DECISION.md) and
-[source research/reuse matrix](docs/PANEL_REUSE_MATRIX.md).
-The CM0 prototype is shelved and preserved at
-`archive/cm0-prototype` (`bc738b8`); the existing instructions below describe
-that historical prototype. The CM0 prototype has not been physically deployed;
-M2's separate native DISPLAY application has been installed and user-validated.
+WiliPirate is a native DISPLAY RAM application with a six-tile touch menu.
+**GPIO, UART, I2C, SPI, CAN and LOGIC are placeholders:** no target reads,
+writes, discovery, communication or captures are implemented. M3 I2C hardware
+integration is planned, not started. Wi-Fi and NFC are future ideas only.
 
-## Preserved CM0 prototype
+The preserved v001 UF2 was installed through the stock SD Apps mechanism and
+user-tested for rendering, touch, navigation, About and physical HOME recovery.
+This is UI validation on one device, not electrical certification or a firmware
+compatibility guarantee. Stock firmware is preserved by the RAM app mechanism.
 
-WiliPirate is a FREE-WILi 2 CM0 Linux Wili/OneWili application inspired by
-Bus Pirate and ESP32 Bit Pirate. **Milestone 1B is entirely host-side:** a
-usable mode-aware console with explicit STUB backends and no hardware access.
-Stock firmware is preserved. No upstream Bus Pirate/Bit Pirate code is copied.
+## Download and installation
 
-## M1D on-device preparation
+Use [the public installation guide](docs/INSTALLATION.md) and the exact
+[preserved M2 UF2](releases/m2-ui-v001/WiliPirate.uf2). No application compilation
+is required. The artifact is stored on `feature/wilipirate-panel`; there is no
+published GitHub Release yet.
 
-[Architecture comparison and launch gates](docs/ON_DEVICE_ARCHITECTURE.md)
-select the official CM0 **C++ socket-only** adapter. The Python connection's
-fallback remains prohibited. [native/cm0](native/cm0/README.md) prepares a
-minimal Help/Mode/Exit UI with all modes stubbed. No ARM64 Linux deployment
-binary has been built or installed. The original Python core and host preview
-remain intact. A WiliBSP RAM UF2 is supported upstream, but its inspected
-startup changes VREF/radio state and does not meet this project's constraints.
+SHA-256:
+`6bc0a08050c1e18659882bc486a1f03b6e16529916b60112240f548aeb1e6672`
 
-## M1C host panel preview
+**Disconnect all external targets, probes, header wiring, external VREF sources
+and accessories before launching.** Standard BSP startup changes VREF/power
+and other settings. UI-only does not mean electrically isolated.
+Hold physical **HOME for five seconds** to return to the stock DISPLAY app.
 
-```sh
-python -B tools/ui_preview.py
-```
+## Licensing and attribution
 
-A separate Tk development UI exercises the unchanged M1B application using
-CM0-style text cells and synthetic menu/keypad buttons. HiZ starts selected;
-all five backends remain stubs. Up/Down select commands, Enter runs, F3 cycles
-logical modes, Left/Right scroll, and Esc exits. No device is contacted.
-This is a host preview, not execution in the official FREE-WILi emulator:
-that environment does not run CM0 Python. The original console and staged app
-remain unchanged. See [research](docs/EMULATOR_RESEARCH.md) and
-[exact reproduction steps and validation](docs/M1C_VALIDATION.md).
+Original WiliPirate licensing has not been selected. Public source availability
+does not establish a redistribution grant. The preserved artifact includes
+upstream notices, with unresolved licensing questions documented in
+[third-party attribution](docs/THIRD_PARTY.md). No license is selected by this
+cleanup. Official FreeWili code and dependencies retain their own ownership
+and terms. No Bus Pirate or Bit Pirate source code is included.
 
-## Run locally (Python 3.10+; no dependencies)
+The current v001 About screen shows the app name, version and repository URL.
+Creator attribution here does not change the frozen binary.
 
-```sh
-python -B apps/wilipirate/app.py --console
-```
+## Development and preserved research
 
-On Windows, `py -3.12` may replace `python`.
+- [M2 source, build evidence and startup effects](docs/M2_DISPLAY.md)
+- [Historical physical validation and exact baseline](docs/M2_DEVICE_VALIDATION.md)
+- [Architecture decision](docs/PANEL_ARCHITECTURE_DECISION.md)
+- [Contributor boundaries](AGENTS.md)
 
-```text
-HiZ> mode i2c
-Mode: I2C
-I2C> scan
-I2C hardware backend not enabled.
-I2C> mode uart
-Mode: UART
-UART> info
-WiliPirate 0.1.0-m1b | FREE-WILi 2 CM0 application
-Mode: UART
-Backend: STUB
-Hardware: not enabled
-```
+The shelved CM0 prototype remains in `apps/wilipirate/` and `native/cm0/`,
+with a separate Tk preview in `ui/`. These are not the M2 installation path.
+The CM0 checkpoint is `bc738b8`, reachable through `feature/wili-ui`; the
+historically created `archive/cm0-prototype` branch is not published remotely.
+The native CM0 prototype has unresolved response-validation failures and is
+not deployment-qualified. See [CM0 architecture](docs/ARCHITECTURE.md),
+[prototype usage](apps/wilipirate/README.md),
+[host preview reproduction](docs/M1C_VALIDATION.md) and
+[response-validation evidence](docs/M1E_1_RESPONSE_VALIDATION.md).
 
-The session starts in HiZ. Supported commands are `help`, `info`, `mode`,
-`mode hiz`, `mode uart`, `mode i2c`, `mode spi`, `mode gpio`, and `exit`.
-Mode changes update only application state; even selecting a bus performs no
-initialization or pin/power changes. Invalid modes preserve the current mode.
-`help` lists the current mode's stub requests. `scan` (I2C), `read` and
-`write <arguments...>` (UART/I2C/GPIO), and `transfer <arguments...>` (SPI)
-only report an unavailable backend. Arguments remain opaque and no fake
-ACKs, bytes, measurements or successful transfers are returned.
-
-HiZ does not establish electrical isolation. External pin/power state is
-unknown. All modes use stubs; no real backend or transport can be selected by
-flags, environment variables or discovery. M1A and physical validation are deferred.
-
-## Launcher and batch use
-
-```sh
-python -B apps/wilipirate/app.py
-python -B apps/wilipirate/app.py --command "mode uart" --command info --command exit
-```
-
-Default launch prints help/info/modes and exits without reading stdin, matching
-the documented Linux Apps contract. Explicit `--console` reads terminal input
-and keeps the selected mode until exit. Batch commands share one session and
-stop at the first failure (exit status 2); a stub operation is a failure, not
-hardware success. Normal exit/EOF return 0; console Ctrl-C returns 130.
-Each new invocation starts in HiZ. There is no LCD/touch renderer in M1B.
-
-## Check and stage locally
-
-```sh
-python -B -m unittest discover -s tests -v
-python -B tools/stage.py --output dist/m1b/apps
-git diff --check
-```
-
-The staging tool copies only the app entry point, package modules, launcher
-and app/attribution documentation into `dist/m1b/apps/wilipirate/`. It refuses
-an existing destination. No dependencies are fetched or installed, and no
-files are transferred to a device. Use a new output directory to stage again.
-The previous M1 staged folder, if present, is not updated in place.
-
-After a separate approval and safe framework validation, the eventual device
-location is `/home/apps/wilipirate/run.sh`, selected through Linux > Apps.
-It must have its executable bit preserved. The [app README](apps/wilipirate/README.md)
-travels with the staged folder. Current development does not deploy it.
-
-## Design and evidence
-
-- [Current layered architecture and mandatory fail-closed policy](docs/ARCHITECTURE.md)
-- [Interactive UI research and unresolved htop reference](docs/UI_RESEARCH.md)
-- [Capability matrix (hardware evidence, not stub functionality)](docs/CAPABILITY_MATRIX.md)
-- [Preserved M1A safety finding](docs/HARDWARE_VALIDATION.md)
-- [M1B validation](docs/M1B_VALIDATION.md) and [earlier host checks](docs/VALIDATION.md)
-- [Source revisions](docs/SOURCES.json), [GUI archive review](docs/GUI_EXAMPLES.md),
-  and [upstream licenses/reuse decisions](docs/THIRD_PARTY.md)
-
-The pinned BSP reference is unmodified and unnecessary for M1B execution.
-WiliPirate must never silently fall back from the supported bridge to direct
-hardware access. Missing required bridge/API capability must fail closed.
-No workaround for the discovered fwcm0 fallback is included.
+Historical evidence records the observations and permissions of its original
+session; it does not grant permission for future builds or device access.

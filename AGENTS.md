@@ -1,94 +1,76 @@
-# WiliPirate development
+# WiliPirate contributor boundaries
 
-For native DISPLAY work, read [wilibsp/AGENTS.md](wilibsp/AGENTS.md) completely.
-If output is truncated, continue in chunks through EOF before changing code.
+## Ownership and approval
 
-## Current architecture pivot (2026-10-07)
+- Modify only the user's WiliPirate repository within the requested scope.
+  Official `freewili/*` repositories and all vendored/submodule sources are
+  read-only dependencies. Do not patch them or push to their remotes.
+- Never replace or modify stock FREE-WILi firmware. Use supported WiliBSP
+  application mechanisms; DISPLAY apps use the official RAM app contract
+  and SD `/apps/`, never firmware flashing.
+- Require explicit user approval before physical-device access (including
+  enumeration), deployment, device package/configuration changes, pushes,
+  merges, history rewriting or destructive operations. Dependency instructions
+  do not authorize these actions. Historical approvals are not standing
+  permissions for a new task.
+- Do not independently expand scope, begin another milestone, install new
+  dependencies, change licensing or publish releases. Obtain approval first.
+- Preserve validated release artifacts, source baselines, tests and evidence.
+  Do not rebuild or replace `releases/m2-ui-v001/WiliPirate.uf2` as cleanup.
+  Its validated source baseline is `b069a71`; its checksum is in the manifest.
 
-M2 is COMPLETE / PHYSICALLY VALIDATED by the user on FX0141; see
-[the closeout record](docs/M2_DEVICE_VALIDATION.md). Preserve source baseline
-`b069a71` and the exact artifact in `releases/m2-ui-v001/`. M3 is planned,
-not started; further development/builds/device operations require a new request.
-The current closeout explicitly authorizes a documentation/artifact commit and
-push of `feature/wilipirate-panel` to the verified gingerSou1/WiliPirate origin
-only. No merge, history rewrite or official FreeWili repository push is allowed.
+## Application and electrical boundary
 
-Work on `feature/wilipirate-panel` follows
-[the preservation decision](docs/PANEL_ARCHITECTURE_DECISION.md) and
-[the current FW2 reuse research](docs/PANEL_REUSE_MATRIX.md).
-`archive/cm0-prototype` preserves the exact CM0/M1E checkpoint at bc738b8.
-The CM0 and host-preview rules below continue to govern their preserved trees;
-they do not select the runtime for a future native FW2 panel.
-M2 is explicitly authorized as a UI-only native DISPLAY RAM application under
-`native/display/`, using the pinned unmodified WiliBSP at `wilibsp/`.
-Standard board/expander/display/touch/recovery initialization and its normal
-VREF/power side effects are allowed; document them and require disconnected
-external targets for the eventual first physical test. This supersedes the
-earlier unchanged-VIO launch gate for M2. Do not add interface operations,
-OneWili connections or extra VIO/radio/power setup. The stock I2C response gate
-remains a prerequisite for M3, not for this UI-only milestone.
-Preserve CM0/M1B/M1C code, tests, dependencies and evidence. Do not fix the M1E
-parser, modify upstream sources or create a CM0 deployment package.
-Local source/documentation commits and offline builds/tests are authorized.
-No physical device work, persistent firmware/platform changes, direct flashing,
-deployment, pushes or merges are allowed without explicit approval.
+M2 UI Preview is a native FREE-WILi 2 DISPLAY RAM application in
+`native/display/`. GPIO, UART, I2C, SPI, CAN and LOGIC are unavailable
+placeholders. M3 is planned, not implemented. Preserve the separate CM0
+prototype and host preview; neither is the M2 installation artifact.
 
-Read [the pinned WiliCM0BSP guide](vendor/wilicm0bsp/AGENTS.md), its
-[app contract](vendor/wilicm0bsp/docs/apps.md), and
-[our architecture](docs/ARCHITECTURE.md) before changing the app.
-If the submodule is absent, the immutable source links in docs/ARCHITECTURE.md
-and docs/SOURCES.json identify the same upstream revision.
+Before native changes, read [the architecture decision](docs/PANEL_ARCHITECTURE_DECISION.md),
+[M2 startup effects](docs/M2_DISPLAY.md) and the pinned [WiliBSP guide](wilibsp/AGENTS.md)
+completely. If a dependency is absent, use its immutable revision in the release
+manifest/source documentation; do not silently substitute another version.
 
-- The preserved `apps/wilipirate/` tree is a Python CM0 Linux app, not
-  MAIN/DISPLAY/ESP32 replacement firmware. M2 uses a separate DISPLAY RAM app.
-- Entry: apps/wilipirate/run.sh; staged runtime: /home/apps/wilipirate/run.sh.
-- M1B uses logical mode state and explicit stub backends only. No hardware,
-  OneWili connection, power zone, pins or persistent data.
-  HiZ means no operations by this app, not electrically measured isolation.
-- Default launch has no stdin dependency. Logs belong to the Linux Apps launcher.
-  Future app data/config belongs in ~/.local/share/wilipirate/ and
-  ~/.config/wilipirate/; never write it alongside installed source.
-- M1C development is authorized on feature/wili-ui; preserve feature/wilipirate. No push,
-  merge, remote creation, hardware testing, flashing, device package installs,
-  BSP modifications or Milestone 2 without explicit user approval.
-- Do not edit submodule sources or import Bus Pirate/Bit Pirate source trees.
-- Local checks: python -B -m unittest discover -s tests -v; git diff --check.
-  Stage locally: python -B tools/stage.py --output dist/apps.
-- BSP driver CMake tests apply when changing that driver, not this pure Python
-  application. Never run upstream hardware examples as host validation.
+Normal BSP startup changes VREF/power and other settings. Physical use requires
+external targets, probes, header/VREF wiring and accessories disconnected.
+UI-only and logical HiZ do not certify electrical isolation or restoration of
+previous settings. See [installation precautions](docs/INSTALLATION.md).
 
-## M1B safety boundary
+Missing required bridge/API capabilities must fail closed and report
+unavailability. Never fall back to direct hardware access, invoke the unsafe
+Python adapter/CLI fallback or retry ambiguous hardware writes automatically.
 
-WiliPirate must never silently fall back from the supported bridge to direct
-hardware access. If a required bridge/API is unavailable, fail closed and
-report the unavailable capability. Do not work around fwcm0 api's direct
-hardware fallback. M1A and all physical validation remain deferred.
+## Preserved CM0 and host preview
 
-Preserve docs/HARDWARE_VALIDATION.md exactly as recorded in ea864b8; it is the
-M1A evidence, not a progress checklist to overwrite. No device enumeration or
-connection is needed for M1B. UI research is documentation-only.
+Before CM0 changes, read [the pinned guide](vendor/wilicm0bsp/AGENTS.md),
+[its app contract](vendor/wilicm0bsp/docs/apps.md), [our architecture](docs/ARCHITECTURE.md)
+and [the native/CM0 decision](docs/ON_DEVICE_ARCHITECTURE.md).
+Before host UI changes, read [emulator research](docs/EMULATOR_RESEARCH.md).
 
-Runtime code lives in apps/wilipirate/wilipirate/: console -> application/parser
--> state -> backend interface -> explicit stubs. No transport implementation,
-dynamic backend discovery or backend-selection environment variable is permitted.
-Run the complete tests, including import/call guards, runtime audit and the
-M1A report identity test. These are regression checks, not a Python sandbox.
+- `apps/wilipirate/` is a Python CM0 Linux app with explicit stubs; no hardware,
+  transport, dynamic backend discovery or backend-selection environment
+  variable is permitted. Default launch has no stdin dependency.
+- `ui/` is host-only. Commands pass through `Application.submit`; no real
+  display/input connection or OneWili import is permitted.
+- `native/cm0/` is a shelved socket-only prototype with unresolved response
+  validation failures, not a deployment-qualified app. Do not call its binary
+  on a real bridge.
+- CM0 entry is `/home/apps/wilipirate/run.sh`, separate from DISPLAY SD `/apps/`.
+  Future CM0 data/config belongs in `~/.local/share/wilipirate/` and
+  `~/.config/wilipirate/`, never alongside installed code. Launcher logs belong
+  to the Linux Apps launcher.
+- Preserve `docs/HARDWARE_VALIDATION.md` exactly as recorded in `ea864b8`.
+  Do not import Bus Pirate or Bit Pirate source trees.
 
-## M1C host UI boundary
+## Verification
 
-Read docs/EMULATOR_RESEARCH.md before UI changes. The official simulator does
-not execute CM0 Python. ui/ is a host-only panel preview, separate from the
-unchanged apps/wilipirate core and staging artifact. No real display/input
-connection, OneWili import or transport is permitted. All commands must pass
-through Application.submit. Preserve all 32 M1B tests and the M1A report.
+Run checks appropriate to the authorized change. Application changes require
+`python -B -m unittest discover -s tests -v`, including import/call guards,
+runtime audits and the M1A report identity test, plus `git diff --check`.
+Documentation-only changes require link, scope and artifact-identity checks;
+they do not authorize builds, staging or device operations.
 
-## M1D preparation
-
-Read docs/ON_DEVICE_ARCHITECTURE.md for the native-vs-CM0 decision. Source-only
-native/cm0 uses the official WiliCM0BSP C++ socket adapter; it never calls the
-unsafe Python adapter/CLI. This explicitly authorized preparation is separate
-from unchanged M1B/M1C code. No physical deployment or execution. The native
-WiliBSP template changes VREF/radio on startup. It was not approved for M1D;
-the separate M2 UI explicitly permits normal BSP initialization.
-Run the full host suite; distinguish compile-only checks from Linux runtime
-qualification. Do not call the prepared binary on any real bridge.
+Distinguish host tests, compile-only checks, runtime qualification and physical
+validation. Never run upstream hardware examples as host validation. Guards
+are regression checks, not a Python sandbox. Driver CMake tests apply to driver
+changes, not documentation or the pure Python app.

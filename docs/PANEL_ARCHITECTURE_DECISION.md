@@ -1,6 +1,6 @@
 # Architecture decision: preserve CM0, investigate a native FW2 panel
 
-Date: 2026-10-07. Status: M2 COMPLETE / PHYSICALLY VALIDATED on FX0141
+Date: 2026-10-07. Status: M2 COMPLETE / PHYSICALLY VALIDATED on a FREE-WILi 2
 (user-reported). [Physical closeout/baseline](M2_DEVICE_VALIDATION.md).
 M3 I2C integration is planned, not started.
 
