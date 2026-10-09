@@ -27,8 +27,7 @@ class DisplayPreparationTests(unittest.TestCase):
         self.assertIn("POWER_ZONES DISPLAY)", cmake)
         self.assertIn("VERSION 001", cmake)
         self.assertNotIn("onewili", cmake)
-        # The historical M2 build contract is frozen in the pivot archive.
-        root = (ROOT / "archive/m2-ui/CMakeLists.txt").read_text()
+        root = (ROOT / "CMakeLists.txt").read_text()
         self.assertIn("add_subdirectory(wilibsp/bsp)", root)
         self.assertNotIn("add_subdirectory(wilibsp)", root)
         self.assertIn("option(FW2_AGENTIO", root)

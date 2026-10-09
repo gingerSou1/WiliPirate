@@ -1,10 +1,5 @@
 # M3 I2C Phase 1: stock API investigation
 
-**Retired engineering evidence.** The Field Analyzer pivot supersedes this
-development direction. Do not resume the diagnostic/power/scan proposals from
-this historical page. Its pre-pivot snapshot and all findings are preserved in
-[the M3 archive](../archive/README.md). Active scope: [Field Analyzer charter](PROJECT_CHARTER.md).
-
 Date: 2026-10-08. WiliPirate branch: `feature/wilipirate-panel`.
 Baseline: `68e3d35bc14915acdff2b6c47dc9bb0c455c60bb`.
 Documentation/source inspection only. No implementation, build, hardware access,

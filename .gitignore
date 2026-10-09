@@ -11,6 +11,10 @@ build/
 dist/
 *.uf2
 !releases/m2-ui-v001/WiliPirate.uf2
+!releases/field-v002/WiliPirate.uf2
+# Keep the redundant local device-identifying snapshot out of new publication.
+# Its unchanged tracked original is referenced by archive/manifest.json.
+archive/m2-ui/docs/M2_DEVICE_VALIDATION.md
 *.elf
 *.bin
 *.zip

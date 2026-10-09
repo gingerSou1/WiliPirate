@@ -1,0 +1,8 @@
+{
+  "name": "WiliPirate",
+  "version": "002",
+  "size": 61440,
+  "sha256": "53ca890ce882f8cc088657abd8f7cc4482292e150e5544a60044604e9a3c9a2f",
+  "validation": "User-reported physical UI/navigation and five-second HOME recovery passed. Electrical safety and instrument operation not validated.",
+  "startup": "Documented M2-style BSP initialization; no additional release policy."
+}

@@ -1,0 +1,181 @@
+{
+  "entries": [
+    {
+      "group": "m3-i2c-diagnostic",
+      "sha256": "a050b32116471823eaa1f84fc1035b4ce91e490fb8f57963460c4be000ced15e",
+      "original_path": "native/i2c_diag/capture.c",
+      "archive_path": "archive/m3-i2c-diagnostic/native/i2c_diag/capture.c"
+    },
+    {
+      "group": "m3-i2c-diagnostic",
+      "sha256": "f60abcba937fc7af3945de69a950125643cee3fcf218503a36f3c530dc94c197",
+      "original_path": "native/i2c_diag/capture.h",
+      "archive_path": "archive/m3-i2c-diagnostic/native/i2c_diag/capture.h"
+    },
+    {
+      "group": "m3-i2c-diagnostic",
+      "sha256": "96b5fb53c0587984b74b43e8dc3778f694b27b5bfa341604549b21f3d3963e44",
+      "original_path": "native/i2c_diag/CMakeLists.txt",
+      "archive_path": "archive/m3-i2c-diagnostic/native/i2c_diag/CMakeLists.txt"
+    },
+    {
+      "group": "m3-i2c-diagnostic",
+      "sha256": "7b7113af8406741e92b0e5d3807e359a0580ace6dd6bce800756146a1e9171ab",
+      "original_path": "native/i2c_diag/main.c",
+      "archive_path": "archive/m3-i2c-diagnostic/native/i2c_diag/main.c"
+    },
+    {
+      "group": "m3-i2c-diagnostic",
+      "sha256": "3e3b155304b73d803cf94587156b77f37479fc11a7d72fb10c68a9ed2469f2cb",
+      "original_path": "native/i2c_diag/MANUAL_TEST.md",
+      "archive_path": "archive/m3-i2c-diagnostic/native/i2c_diag/MANUAL_TEST.md"
+    },
+    {
+      "group": "m3-i2c-diagnostic",
+      "sha256": "9b5b1e151ea7bffc59caeaa47dcbe47eb6bcf8c110c8a9f4d5dce9e87dc96152",
+      "original_path": "native/i2c_diag/PHYSICAL_RESULT_01.md",
+      "archive_path": "archive/m3-i2c-diagnostic/native/i2c_diag/PHYSICAL_RESULT_01.md"
+    },
+    {
+      "group": "m3-i2c-diagnostic",
+      "sha256": "ca85e884af4eb64ef5ab0f26864249e77bc63192c5d0e68aabdff17f46c3135d",
+      "original_path": "native/i2c_diag/README.md",
+      "archive_path": "archive/m3-i2c-diagnostic/native/i2c_diag/README.md"
+    },
+    {
+      "group": "m3-i2c-diagnostic",
+      "sha256": "2bdc62152069716ed3c61a6254cecc5fbd8cb2b0270300a7b9c61645e2724084",
+      "original_path": "native/i2c_diag/VALIDATION.md",
+      "archive_path": "archive/m3-i2c-diagnostic/native/i2c_diag/VALIDATION.md"
+    },
+    {
+      "group": "m3-i2c-diagnostic",
+      "sha256": "586e00a12a4da4f99c38d3f9733e98832eb8d147837a1db885fcdae7f11ba197",
+      "original_path": "native/i2c_diag/tests/capture_test.c",
+      "archive_path": "archive/m3-i2c-diagnostic/native/i2c_diag/tests/capture_test.c"
+    },
+    {
+      "group": "m3-i2c-diagnostic",
+      "sha256": "26831d54d85a99559c581ed52c78abbcc9916e5043113d6382f6c25abe91eb47",
+      "original_path": "tests/test_i2c_diag.py",
+      "archive_path": "archive/m3-i2c-diagnostic/tests/test_i2c_diag.py"
+    },
+    {
+      "group": "m3-i2c-diagnostic",
+      "sha256": "23f583cf626080a36372cded283f4cd9cf201f3877021aef73cade53a77c9e4a",
+      "original_path": "docs/M3_I2C_STOCK_API.md",
+      "archive_path": "archive/m3-i2c-diagnostic/docs/M3_I2C_STOCK_API.md"
+    },
+    {
+      "group": "m3-i2c-diagnostic",
+      "sha256": "16222285e2adf0d4d1174f08215dfdc2c99ec8d6c734cf4ee975899e1ab8be07",
+      "original_path": "docs/M3_SESSION_CHECKPOINT.md",
+      "archive_path": "archive/m3-i2c-diagnostic/docs/M3_SESSION_CHECKPOINT.md"
+    },
+    {
+      "group": "m2-ui",
+      "sha256": "874cc172da718a687559a0ea6456375d5e7c007e8915b9ba5d7bb284b3b29c07",
+      "original_path": "CMakeLists.txt",
+      "archive_path": "archive/m2-ui/CMakeLists.txt"
+    },
+    {
+      "group": "m2-ui",
+      "sha256": "b1d0e50cb8c35a1966cab577041fe5e2b3748cad565fc7879a5b78db8ca31172",
+      "original_path": "native/display/CMakeLists.txt",
+      "archive_path": "archive/m2-ui/native/display/CMakeLists.txt"
+    },
+    {
+      "group": "m2-ui",
+      "sha256": "22dc9c25da262aa325d4e09a44ef455c69bb377d5a9c2bc096e5384bfc073812",
+      "original_path": "native/display/main.c",
+      "archive_path": "archive/m2-ui/native/display/main.c"
+    },
+    {
+      "group": "m2-ui",
+      "sha256": "3db3e020c0f2265b0abb6759ba63a8d6866f423371df70cd4c42ac65aaa66a4f",
+      "original_path": "native/display/navigation.h",
+      "archive_path": "archive/m2-ui/native/display/navigation.h"
+    },
+    {
+      "group": "m2-ui",
+      "sha256": "5a94691e4c933edb4c16367f92b897c894d034187fd0eac0c82aa768cbd3b8bb",
+      "original_path": "native/display/README.md",
+      "archive_path": "archive/m2-ui/native/display/README.md"
+    },
+    {
+      "group": "m2-ui",
+      "sha256": "560535cf3d5f95607c4ac5166ee00e60b2ff88eea3d8d5dccbea3c1a1d832e6b",
+      "original_path": "native/display/ui.c",
+      "archive_path": "archive/m2-ui/native/display/ui.c"
+    },
+    {
+      "group": "m2-ui",
+      "sha256": "544101fa4ea44cfb6af564169972a1dbac10d4d9b7c211da154869755647317a",
+      "original_path": "native/display/ui.h",
+      "archive_path": "archive/m2-ui/native/display/ui.h"
+    },
+    {
+      "group": "m2-ui",
+      "sha256": "2210217350c4251b48466ceb60bc15a176271da4df7a7f9587031161ecd39159",
+      "original_path": "native/display/tests/CMakeLists.txt",
+      "archive_path": "archive/m2-ui/native/display/tests/CMakeLists.txt"
+    },
+    {
+      "group": "m2-ui",
+      "sha256": "fff7002cb90686dfac3ff5d34a774fbfee5218a50d39bc173d4321c3306bd791",
+      "original_path": "native/display/tests/navigation_test.c",
+      "archive_path": "archive/m2-ui/native/display/tests/navigation_test.c"
+    },
+    {
+      "group": "m2-ui",
+      "sha256": "751d9c0a3012fe50fe3459a8364e11b99f8e140f968725b3365354804bf66678",
+      "original_path": "native/display/tests/render_test.c",
+      "archive_path": "archive/m2-ui/native/display/tests/render_test.c"
+    },
+    {
+      "group": "m2-ui",
+      "sha256": "33c5c6da61154f9c476b98fa6f77e0ceb256bd9e4278012d6137bf77feeffb77",
+      "original_path": "tests/test_display_preparation.py",
+      "archive_path": "archive/m2-ui/tests/test_display_preparation.py"
+    },
+    {
+      "group": "m2-ui",
+      "sha256": "5669f1ce175d44db9484d7e2a5a51a6a6e63f96f78d6284f6f3e3757660c6c67",
+      "original_path": "docs/M2_DISPLAY.md",
+      "archive_path": "archive/m2-ui/docs/M2_DISPLAY.md"
+    },
+    {
+      "group": "m2-ui",
+      "sha256": "cbf0348ca3704d6ce908ff576105878b5894fc01bd1d2b4b436b4ee79e81ddca",
+      "original_path": "docs/M2_DEVICE_VALIDATION.md",
+      "archive_path": "docs/M2_DEVICE_VALIDATION.md",
+      "preservation": "Unchanged tracked original; duplicate device-identifying snapshot excluded."
+    },
+    {
+      "group": "m2-ui",
+      "sha256": "60b122ae861bbe10500f320f54a205f7121ccdf1f4d3cbf43563ef366a18906e",
+      "original_path": "docs/PANEL_ARCHITECTURE_DECISION.md",
+      "archive_path": "archive/m2-ui/docs/PANEL_ARCHITECTURE_DECISION.md"
+    },
+    {
+      "group": "m2-ui",
+      "sha256": "190f206491c1e69ab1939d0ee130a19048c636936e8847dbfe8fb9fe6c89aeba",
+      "original_path": "docs/ARCHITECTURE.md",
+      "archive_path": "archive/m2-ui/docs/ARCHITECTURE.md"
+    },
+    {
+      "group": "m2-ui",
+      "sha256": "a018e758d5d33d087333585a60a2466586c6fdc0263bc50b8bb525320bfb6fe5",
+      "original_path": "README.md",
+      "archive_path": "archive/m2-ui/README_ORIGINAL.md"
+    },
+    {
+      "group": "m2-ui",
+      "sha256": "9b4b725c1df6e6026eb4e96c04752b0300ab1f358fece598e9cafa7ab5e8bdec",
+      "original_path": "docs/INSTALLATION.md",
+      "archive_path": "archive/m2-ui/docs/INSTALLATION.md"
+    }
+  ],
+  "recorded": "2026-10-09",
+  "baseline": "8057bf917b811c54e757a4600fd88945cb5634fc"
+}

@@ -21,13 +21,25 @@
 
 ## Application and electrical boundary
 
-M2 UI Preview is a native FREE-WILi 2 DISPLAY RAM application in
-`native/display/`. GPIO, UART, I2C, SPI, CAN and LOGIC are unavailable
-placeholders. M3 is planned, not implemented. Preserve the separate CM0
-prototype and host preview; neither is the M2 installation artifact.
+The active project is WiliPirate Field Analyzer in `native/field_analyzer/`.
+Current scope is pure UI/navigation, Connection Guides, research and offline
+validation. All instruments, capture/storage, outputs and AI are unavailable.
+v003 permits simulated CAN decoding/monitoring and volatile RAM snapshots,
+plus an inert Tools Glitching pane. Live CAN, persistent storage and all
+fault-injection outputs remain disabled. Do not broaden startup exceptions.
+M2 and the M3 diagnostic are retired and preserved in `archive/`; do not resume
+their build/deployment workflows or touch the installed diagnostic SD file.
+The separate CM0 prototype and host preview remain unchanged.
 
-Before native changes, read [the architecture decision](docs/PANEL_ARCHITECTURE_DECISION.md),
-[M2 startup effects](docs/M2_DISPLAY.md) and the pinned [WiliBSP guide](wilibsp/AGENTS.md)
+The active build defaults to host UI checks. Standard BSP startup changes
+VREF/internal GPIO/power; device configuration must fail closed without explicit
+startup approval. No build flag authorizes physical deployment. The current
+charter forbids hardware/output/configuration changes and device access.
+Connection Guides are informational and must never initiate operations.
+
+Before native changes, read [the active architecture](docs/ARCHITECTURE.md),
+[the charter](docs/PROJECT_CHARTER.md), [M2 startup effects](docs/M2_DISPLAY.md)
+and the pinned [WiliBSP guide](https://github.com/freewili/wilibsp/blob/be4bdd63d31a80f95410e583710cf4e43a7be7fa/AGENTS.md)
 completely. If a dependency is absent, use its immutable revision in the release
 manifest/source documentation; do not silently substitute another version.
 
@@ -43,7 +55,8 @@ Python adapter/CLI fallback or retry ambiguous hardware writes automatically.
 ## Preserved CM0 and host preview
 
 Before CM0 changes, read [the pinned guide](vendor/wilicm0bsp/AGENTS.md),
-[its app contract](vendor/wilicm0bsp/docs/apps.md), [our architecture](docs/ARCHITECTURE.md)
+[its app contract](vendor/wilicm0bsp/docs/apps.md),
+[the preserved CM0 architecture](archive/m2-ui/docs/ARCHITECTURE.md)
 and [the native/CM0 decision](docs/ON_DEVICE_ARCHITECTURE.md).
 Before host UI changes, read [emulator research](docs/EMULATOR_RESEARCH.md).
 
