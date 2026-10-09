@@ -22,7 +22,9 @@ disconnected. Install only through the official SD Apps mechanism with approval;
 do not flash it or treat it as stock firmware.
 
 `notices/` retains the existing BSP, SDK and RTT notices unchanged. Original
-WiliPirate source licensing has not been selected; no new license grant is made.
+WiliPirate code and documentation use the [project MIT License](../../LICENSE).
+That license applies only to original WiliPirate work and does not supersede
+third-party terms or grant permission for every component of this binary.
 The RTT redistribution terms and full linked-component notice inventory remain
 unresolved; see [licensing questions](../../docs/THIRD_PARTY.md#unresolved-public-distribution-questions).
 Do not treat these preserved notices as confirmation of complete redistribution

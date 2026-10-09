@@ -1,5 +1,11 @@
 # Upstream references and attribution
 
+Original WiliPirate code and documentation are licensed under the
+[MIT License](../LICENSE), copyright © 2026 gingerSou1. This grant applies only
+to original WiliPirate work. It does not relicense official FreeWili code,
+vendored dependencies or other third-party material, supersede their terms,
+or resolve third-party binary redistribution permissions.
+
 No Bus Pirate or Bit Pirate source code or assets are included in WiliPirate.
 The mode prompt, command vocabulary and protocol-adapter separation are concept
 references. M1's parser and launcher are independently written Python/shell.
@@ -27,14 +33,15 @@ or UI source was copied into the application tree or modified.
 
 Bus Pirate is a trademark of Where Labs LLC per its README. WiliPirate is an
 independent application concept, not a claim of endorsement or compatibility
-with Bus Pirate electrical hardware. A distribution license for original
-WiliPirate code has not been selected; this milestone does not invent one.
+with Bus Pirate electrical hardware. The original-code MIT license does not
+grant rights to Bus Pirate trademarks or third-party assets.
 
 ## Unresolved public distribution questions
 
 WiliPirate — Created by gingerSou1. This attribution applies to original
-WiliPirate work, not official FreeWili code or other dependencies. The cleanup
-does not select a project license or grant redistribution permission.
+WiliPirate work, not official FreeWili code or other dependencies. The project
+MIT license does not establish permission to redistribute the complete v001
+binary while third-party permissions remain unresolved.
 
 The preserved v001 [notice directory](../releases/m2-ui-v001/notices/) contains:
 
@@ -52,8 +59,8 @@ or its root MIT license must not be assumed to resolve separately licensed RTT
 terms. This is an unresolved permission question, not a conclusion that use
 violates a license.
 
-Before a public release, obtain approval for the original-code license and
-resolve RTT redistribution permission. Complete a linked-component notice
+Before a public release, resolve RTT redistribution permission. Complete a
+linked-component notice
 inventory from retained build/link evidence (including SDK components and the
 BSP font), without rebuilding or changing the validated artifact. If evidence
 is insufficient, record the gap rather than assuming unused archive members

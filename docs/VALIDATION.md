@@ -43,5 +43,7 @@ were not modified, and they are not dependencies of the no-I/O scaffold.
 
 Milestone 2 is a proposal only. See ARCHITECTURE.md for the exact gated GPIO
 snapshot test. The application does not enforce electrical HiZ or verify
-existing target power. The original-code distribution license is undecided;
-third-party reference licenses are documented in THIRD_PARTY.md.
+existing target power. At this historical checkpoint, the original-code
+distribution license was undecided. Original WiliPirate code and documentation
+now use the [MIT License](../LICENSE); third-party terms and unresolved binary
+redistribution questions are documented in [THIRD_PARTY.md](THIRD_PARTY.md).

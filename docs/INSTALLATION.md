@@ -4,10 +4,11 @@ WiliPirate — Created by gingerSou1
 
 This guide describes the preserved **v001 DISPLAY RAM application** for
 **FREE-WILi 2**. No application compilation is required. GPIO, UART, I2C,
-SPI, CAN and LOGIC are unavailable placeholders. Original-code licensing and
-some dependency redistribution terms remain unresolved; see
-[third-party notices and questions](THIRD_PARTY.md). These instructions do not
-create a license grant.
+SPI, CAN and LOGIC are unavailable placeholders. Original WiliPirate code and
+documentation use the [MIT License](../LICENSE). Some third-party binary
+redistribution permissions remain unresolved; see
+[third-party notices and questions](THIRD_PARTY.md). The project license does
+not supersede third-party terms or resolve those permissions.
 
 ## Before installation
 

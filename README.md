@@ -31,12 +31,14 @@ Hold physical **HOME for five seconds** to return to the stock DISPLAY app.
 
 ## Licensing and attribution
 
-Original WiliPirate licensing has not been selected. Public source availability
-does not establish a redistribution grant. The preserved artifact includes
-upstream notices, with unresolved licensing questions documented in
-[third-party attribution](docs/THIRD_PARTY.md). No license is selected by this
-cleanup. Official FreeWili code and dependencies retain their own ownership
-and terms. No Bus Pirate or Bit Pirate source code is included.
+WiliPirate — Created by gingerSou1. Original WiliPirate code and documentation
+are licensed under the [MIT License](LICENSE), copyright © 2026 gingerSou1.
+This license does not supersede third-party licenses or establish permission
+to redistribute every component of the preserved binary. Official FreeWili
+code and other dependencies retain their own ownership and terms. Existing
+upstream notices and unresolved binary redistribution questions are documented
+in [third-party attribution](docs/THIRD_PARTY.md). No Bus Pirate or Bit Pirate
+source code is included.
 
 The current v001 About screen shows the app name, version and repository URL.
 Creator attribution here does not change the frozen binary.
