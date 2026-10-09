@@ -1,5 +1,10 @@
 # M3 diagnostic checkpoint: build unfinished
 
+**Current status (2026-10-09): offline diagnostic build/validation passed.**
+The stopped checkpoint below remains the historical record. Its stop condition
+was superseded by the user's explicit offline resume request; physical access
+and deployment remain unauthorized. See the resume results at the end.
+
 Recorded 2026-10-08 on `feature/wilipirate-panel`, starting from `68e3d35`.
 The user stopped all builds/troubleshooting and requested a local checkpoint.
 This record describes completed work only; it is not authorization to resume.
@@ -71,3 +76,85 @@ processes. Do not restart builds, add tooling, fix sources or expand the task
 without a new user request. Physical deployment requires separate explicit
 approval after offline target validation and safety review. This checkpoint
 is local only; no push or GitHub Release is authorized.
+
+## 2026-10-09 resume: offline target build passed
+
+Recovered a clean working tree at local checkpoint
+`f0749ea4092dbb4b366fa3e8666df11daedb6aa6` on `feature/wilipirate-panel`.
+No prior `docs/M3_SESSION_CHECKPOINT.md` existed. Reused yesterday's archives,
+compilers, successful pioasm installation, synthetic test binary and diagnostic
+sources. No dependency download, environment migration or source rewrite was
+needed. WSL fallback was unnecessary.
+
+The old CMake cache contained the archiver wrapper path, but generated
+`CMakeCXXCompiler.cmake` still set `CMAKE_AR-NOTFOUND`. A fresh
+`build/m3-picotool-final/` configuration specified `CMAKE_AR:FILEPATH` and
+`CMAKE_RANLIB:FILEPATH` before compiler detection. This resolved the blocker
+within approximately two minutes of resuming. Official picotool 2.3.0 was
+built/installed into the workspace only, still with USB support disabled.
+The successful pioasm prerequisite was not rebuilt.
+
+The separate standalone project then compiled successfully in `build/m3-diag/`:
+
+| Measurement | Result |
+| --- | --- |
+| Artifact | `build/m3-diag/WiliPirateI2CDiag.uf2` |
+| SHA-256 | `95719e2cec6415dc974297973d5938f192a2a431c18f8899063d2f385e804a0e` |
+| File size | 66,560 bytes |
+| UF2 blocks | 130 |
+| Payload bytes | 33,164 |
+| Payload range | `0x20000000` to exclusive end `0x2000818c` |
+| Official target/metadata check | SRAM; WiliPirateI2CDiag v001; expected description |
+| Processor/build | FREE-WILi 2 DISPLAY RP2350B / Cortex-M33, `no_flash`, MinSizeRel |
+| Toolchain | Arm GNU Toolchain 15.2.Rel1 / GCC 15.2.1 |
+| SDK | Pinned Pico SDK 2.3.0 with its pinned TinyUSB sources |
+| Host utilities | CMake 3.31.6, Ninja 1.12.1, Zig 0.14.1 / Clang 19.1.7, Python 3.12 |
+
+Only the diagnostic target was built. The root M2 CMake project was not used.
+The official validator passed during the build and independently afterward.
+An additional block audit checked magic, numbering, payload lengths and SRAM
+bounds for every block; no payload targets QSPI flash or PSRAM. ELF inspection
+found a single file-bearing LOAD segment in SRAM, entry `0x20000179`, plus two
+zero-file-size scratch-SRAM stack segments. Its linked metadata declares only
+DISPLAY; AgentIO and USB/UART stdio are disabled.
+
+The application compiled with `-Werror` for its own sources. Existing upstream
+PIO-USB inline/noinline warnings and two host picotool warnings were left intact;
+no upstream patch was made. Byte comparison against the original archives
+confirmed all 2,275 regular files of the cached BSP, OneWili and base SDK copies
+were unchanged. TinyUSB was the already-prepared SDK gitlink source copy.
+
+## Resume validation and limits
+
+- Python suite: **55/55 passed**; import/call guards, runtime audits, M1A identity
+  and three diagnostic boundary checks passed.
+- Reused host binary: **14 synthetic capture cases passed**. This exercises
+  fragmented/multiline/empty envelopes, wrong paths, malformed identities,
+  duplicate responses, firmware refusal, incomplete data, buffer/timing limits,
+  a body larger than 4 KiB, clock wrap and consumed attempts. No fixture claims
+  to describe the actual Poll address schema.
+- Static checks confirm one stock Poll call site and consumed manual-attempt
+  gating, bounded reads/deadline, recovery-aware opening and send timer, and no
+  target GPIO, bus configuration, CAN, rail or VREF setters in the app.
+- Linked recovery functions and the raw-send entry are present; target CAN,
+  `ow_io_*`, VREF setter, rail-release and USB initialization symbols were not
+  found. Internal GPIO/I2C symbols are present for standard board/display setup.
+- Source review confirms every retained byte is accessible through raw pages
+  at eight bytes per row, ten rows per page, with page count rounded up for
+  the final partial page. Exact hex, offsets and byte count enable complete
+  reconstruction; metadata/chunk records also have paging. This is manual LCD
+  retrieval, not an automatic file export or a truncated first-screen preview.
+- M2 source/artifact and M1A evidence are unchanged. M2 SHA-256 remains
+  `6bc0a08050c1e18659882bc486a1f03b6e16529916b60112240f548aeb1e6672`.
+
+Build/configure/test logs and block-audit measurements are retained in ignored
+`build/m3-configure.log`, `build/m3-build.log`, `build/m3-regression.log` and
+`build/m3-validation.json`. Source/runtime HOME paths were reviewed and compiled;
+physical HOME behavior, blocked-write recovery, installed firmware compatibility
+and actual Poll results remain unverified. The five-second receive window does
+not bound opening, UART submission or MAIN's hardware operation. No new retry,
+power workaround or address decoder was added.
+
+See [the manual empty-bus procedure](MANUAL_TEST.md). No physical device was
+enumerated, accessed, installed or launched. No commit, push or merge was made
+during the resume. Stop after offline validation for deployment review.

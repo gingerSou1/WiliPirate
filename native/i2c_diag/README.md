@@ -2,9 +2,10 @@
 
 WiliPirate — Created by gingerSou1. Original code: [MIT](../../LICENSE).
 **Offline diagnostic candidate; not physically validated or approved to deploy.**
-**Stopped checkpoint: picotool is unfinished and no diagnostic UF2 exists.**
-See [the actual build/test status](VALIDATION.md). Build commands below are
-reference instructions, not permission to resume the stopped work.
+**2026-10-09: offline target build and SRAM validation passed.** Physical use
+remains unverified and requires separate approval. See
+[the actual build/test status](VALIDATION.md) and
+[the empty-bus manual test instructions](MANUAL_TEST.md).
 This separate app does not change the six-tile M2 source or its validated UF2.
 It uses the stock command `i\i\p` through the pinned official OneWili/FwGUI
 transport, following the official canblast full-text observation pattern.
@@ -182,3 +183,7 @@ results, compiler versions and artifact measurements.
 The project's MIT grant does not resolve third-party binary redistribution
 terms. Preserve all applicable notices and the unresolved questions in
 [THIRD_PARTY.md](../../docs/THIRD_PARTY.md); this build is not a public release.
+The diagnostic UF2 remains ignored local build output. Source/test/documentation
+publication does not authorize tracking that binary as a release artifact;
+retain its checksum and measurements in the validation record while physical
+qualification and third-party redistribution permissions remain pending.
